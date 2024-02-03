@@ -9,92 +9,95 @@ import SwiftUI
 import CoreData
 
 struct MainView: View {
-    @Environment(\.managedObjectContext) private var viewContext
-
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
-        animation: .default)
-    private var items: FetchedResults<Item>
+    let buttons = [
+        ("Tasks", "planet-1"),
+        ("Calendar", "planet-2"),
+        ("Notes", "planet-3"),
+        ("Health", "planet-4"),
+        ("Overview", "planet-5")
+    ]
 
     var body: some View {
-        NavigationView {
-            VStack{
-                NavigationLink(destination: FocusView()) {
-                    Text("Focus")
-                }
-                NavigationLink(destination: TasksView()) {
-                    Text("Tasks")
-                }
-                NavigationLink(destination: CalendarView()) {
-                    Text("Calendar")
-                }
-                NavigationLink(destination: NotesView()) {
-                    Text("Notes")
-                }
-                NavigationLink(destination: HealthView()) {
-                    Text("Health")
-                }
-                NavigationLink(destination: OverviewView()) {
-                    Text("Overview")
-                }
-            }
-            
-//            List {
-//                ForEach(items) { item in
-//                    NavigationLink {
-//                        Text("Item at \(item.timestamp!, formatter: itemFormatter)")
-//                    } label: {
-//                        Text(item.timestamp!, formatter: itemFormatter)
-//                    }
-//                }
-//                .onDelete(perform: deleteItems)
-//            }
-//            .toolbar {
-//                ToolbarItem(placement: .navigationBarTrailing) {
-//                    EditButton()
-//                }
-//                ToolbarItem {
-//                    Button(action: addItem) {
-//                        Label("Add Item", systemImage: "plus")
-//                    }
-//                }
-//            }
-//            Text("Select an item")
-        }
-        .background(Color.red)
-    }
+        NavigationStack {
+            ZStack {
+                Color("bg-color")
+                    .ignoresSafeArea()
 
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+                VStack(spacing: 20) {
+                    // Star garden area with the separate "Focus" button
+                    starGarden()
+                        .frame(maxWidth: .infinity, maxHeight: 300)
+                    
+                    // Grid layout for the rest of the buttons
+                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
+                        ForEach(buttons, id: \.0) { button in
+                            navigationButton(label: button.0, imageName: button.1)
+                        }
+                    }
+                    .padding(.horizontal)
+                }
             }
         }
     }
+    
+    @ViewBuilder
+    private func starGarden() -> some View {
+        VStack {
 
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
+            Text("Placeholder for star garden")
+                .foregroundColor(.white)
+                .font(.custom("Futura-Medium", size:18))
 
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+            NavigationLink(destination: FocusView()) {
+                Text("Focus")
+                    .foregroundColor(.white)
+                    .padding()
+                    .background(Color.blue) // Customize the background color
+                    .cornerRadius(10)
+                    .font(.custom("Futura-Medium", size: 24))
             }
+            .buttonStyle(PlainButtonStyle()) // Use PlainButtonStyle to prevent button highlighting effect
+        }
+    }
+    
+    private func navigationButton(label: String, imageName: String) -> some View {
+        NavigationLink(destination: destinationView(for: label)) {
+            ZStack {
+                Image(imageName)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 100, height: 100)
+                    .foregroundColor(.white)
+                    .opacity(0.7)
+                Text(label)
+                    .foregroundColor(.white)
+                    .shadow(color: .black, radius: 3)
+                    .bold()
+                    .font(.custom("Futura-Medium", size: 24))
+            }
+            .padding()
+            .frame(maxWidth: .infinity)
+            .background(Color("bg-color")) // Ensure this matches your ZStack's background
+            .cornerRadius(10)
+        }
+        .buttonStyle(PlainButtonStyle()) // Use PlainButtonStyle to prevent button highlighting effect
+    }
+    
+    // Function to return the appropriate destination view
+    private func destinationView(for label: String) -> some View {
+        switch label {
+        case "Tasks":
+            return AnyView(TasksView())
+        case "Calendar":
+            return AnyView(CalendarView())
+        // Add more cases for your other views
+        default:
+            return AnyView(Text("Not Implemented"))
         }
     }
 }
+
+
 
 private let itemFormatter: DateFormatter = {
     let formatter = DateFormatter()
@@ -108,3 +111,4 @@ struct ContentView_Previews: PreviewProvider {
         MainView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }
+
