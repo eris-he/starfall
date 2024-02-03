@@ -1,35 +1,41 @@
 import SwiftUI
 
-struct NoteDetailView: View {
-    @Environment(\.managedObjectContext) private var viewContext
+struct NoteEditView: View {
     @ObservedObject var note: Note
-
-    // Renamed state variables to avoid conflict with 'note.body'
-    @State private var noteTitle: String = ""
-    @State private var noteBody: String = ""
+    @Environment(\.managedObjectContext) var viewContext
 
     var body: some View {
         Form {
-            TextField("Title", text: $newTitle)
-            TextField("Body", text: $noteBody)
+            TextField("Title", text: Binding<Any>.safeUnwrap($note.noteTitle, defaultValue: ""))
+            TextField("Body", text: Binding<Any>.safeUnwrap($note.noteBody, defaultValue: ""))
+            DatePicker(
+                "Date",
+                selection: Binding<Any>.safeUnwrap($note.noteDate, defaultValue: Date()),
+                displayedComponents: .date
+            )
             Button("Save") {
-                // Update the note with the new values
-                note.title = newTitle
-                note.body = noteBody
-                
-                // Save the context
-                do {
-                    try viewContext.save()
-                } catch {
-                    print(error.localizedDescription)
-                }
+                saveNote()
             }
         }
         .navigationTitle("Edit Note")
-        .onAppear {
-            // Initialize the temporary state with the current note values
-            noteTitle = note.title ?? ""
-            noteBody = note.body ?? ""
+    }
+    
+    private func saveNote() {
+        do {
+            try viewContext.save()
+        } catch {
+            print("Failed to save note: \(error.localizedDescription)")
+            // Handle the error appropriately
         }
+    }
+}
+
+extension Binding {
+    /// Creates a non-optional binding from an optional binding, replacing nil with a default value.
+    static func safeUnwrap<Value>(_ binding: Binding<Value?>, defaultValue: Value) -> Binding<Value> {
+        return Binding<Value>(
+            get: { binding.wrappedValue ?? defaultValue },
+            set: { binding.wrappedValue = $0 }
+        )
     }
 }
