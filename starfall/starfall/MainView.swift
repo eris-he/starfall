@@ -77,10 +77,10 @@ struct MainView: View {
             }
             .padding()
             .frame(maxWidth: .infinity)
-            .background(Color("bg-color")) // Ensure this matches your ZStack's background
+            .background(Color("bg-color"))
             .cornerRadius(10)
         }
-        .buttonStyle(PlainButtonStyle()) // Use PlainButtonStyle to prevent button highlighting effect
+        .buttonStyle(PlainButtonStyle())
     }
     
     // Function to return the appropriate destination view
@@ -90,7 +90,14 @@ struct MainView: View {
             return AnyView(TasksView())
         case "Calendar":
             return AnyView(CalendarView())
-        // Add more cases for your other views
+        case "Focus":
+            return AnyView(FocusView())
+        case "Notes":
+            return AnyView(NotesView())
+        case "Health":
+            return AnyView(HealthView())
+        case "Overview":
+            return AnyView(OverviewView())
         default:
             return AnyView(Text("Not Implemented"))
         }
