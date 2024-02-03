@@ -1,4 +1,5 @@
 import SwiftUI
+import CoreData
 
 struct NotesView: View {
     @Environment(\.managedObjectContext) private var viewContext
@@ -7,6 +8,12 @@ struct NotesView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \Note.noteDate, ascending: false)],
         animation: .default
     ) var notes: FetchedResults<Note>
+    
+    // State to manage the active state of the NavigationLink
+    @State private var isAddingNewNote = false
+    // State to hold the new note object to be edited
+    @State private var newNote: Note?
+
 
     var body: some View {
         NavigationView {
@@ -33,6 +40,14 @@ struct NotesView: View {
 
     private func addNote() {
         // Your implementation for adding a new note
+        let newNote = Note(context: viewContext)
+        newNote.noteTitle = "New Note"
+        newNote.noteBody = ""
+        newNote.noteDate = Date()
+        self.newNote = newNote
+        
+        // Trigger the navigation to the NoteEditView
+        isAddingNewNote = true
     }
 
     private func deleteNotes(offsets: IndexSet) {
@@ -42,7 +57,17 @@ struct NotesView: View {
 
 struct NotesView_Previews: PreviewProvider {
     static var previews: some View {
-        // You might need to set up a preview context for Core Data
-        NotesView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        // Setup the in-memory persistent container
+        let persistentContainer = NSPersistentContainer(name: "starfall") // Replace "YourModel" with the name of your Core Data model file
+        let description = NSPersistentStoreDescription()
+        description.type = NSInMemoryStoreType // This makes it in-memory
+        persistentContainer.persistentStoreDescriptions = [description]
+        persistentContainer.loadPersistentStores { _, error in
+            if let error = error as NSError? {
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            }
+        }
+        // Pass the context to the NotesView
+        return NotesView().environment(\.managedObjectContext, persistentContainer.viewContext)
     }
 }
