@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0F33BF882B6ECD2100E41DB2 /* starfallApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F33BF872B6ECD2100E41DB2 /* starfallApp.swift */; };
-		0F33BF8A2B6ECD2100E41DB2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F33BF892B6ECD2100E41DB2 /* ContentView.swift */; };
+		0F33BF8A2B6ECD2100E41DB2 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F33BF892B6ECD2100E41DB2 /* MainView.swift */; };
 		0F33BF8C2B6ECD2400E41DB2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F33BF8B2B6ECD2400E41DB2 /* Assets.xcassets */; };
 		0F33BF8F2B6ECD2400E41DB2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F33BF8E2B6ECD2400E41DB2 /* Preview Assets.xcassets */; };
 		0F33BF912B6ECD2400E41DB2 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F33BF902B6ECD2400E41DB2 /* Persistence.swift */; };
@@ -16,6 +16,11 @@
 		0F33BF9E2B6ECD2400E41DB2 /* starfallTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F33BF9D2B6ECD2400E41DB2 /* starfallTests.swift */; };
 		0F33BFA82B6ECD2400E41DB2 /* starfallUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F33BFA72B6ECD2400E41DB2 /* starfallUITests.swift */; };
 		0F33BFAA2B6ECD2400E41DB2 /* starfallUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F33BFA92B6ECD2400E41DB2 /* starfallUITestsLaunchTests.swift */; };
+		0F33BFB72B6ED55300E41DB2 /* TasksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F33BFB62B6ED55300E41DB2 /* TasksView.swift */; };
+		0F33BFB92B6ED63C00E41DB2 /* FocusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F33BFB82B6ED63C00E41DB2 /* FocusView.swift */; };
+		0F33BFBB2B6ED65A00E41DB2 /* NotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F33BFBA2B6ED65A00E41DB2 /* NotesView.swift */; };
+		0F33BFBD2B6ED67E00E41DB2 /* HealthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F33BFBC2B6ED67E00E41DB2 /* HealthView.swift */; };
+		0F33BFBF2B6ED68900E41DB2 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F33BFBE2B6ED68900E41DB2 /* CalendarView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,7 +43,7 @@
 /* Begin PBXFileReference section */
 		0F33BF842B6ECD2100E41DB2 /* starfall.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = starfall.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F33BF872B6ECD2100E41DB2 /* starfallApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = starfallApp.swift; sourceTree = "<group>"; };
-		0F33BF892B6ECD2100E41DB2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		0F33BF892B6ECD2100E41DB2 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		0F33BF8B2B6ECD2400E41DB2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0F33BF8E2B6ECD2400E41DB2 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0F33BF902B6ECD2400E41DB2 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -48,6 +53,11 @@
 		0F33BFA32B6ECD2400E41DB2 /* starfallUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = starfallUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F33BFA72B6ECD2400E41DB2 /* starfallUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = starfallUITests.swift; sourceTree = "<group>"; };
 		0F33BFA92B6ECD2400E41DB2 /* starfallUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = starfallUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		0F33BFB62B6ED55300E41DB2 /* TasksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksView.swift; sourceTree = "<group>"; };
+		0F33BFB82B6ED63C00E41DB2 /* FocusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusView.swift; sourceTree = "<group>"; };
+		0F33BFBA2B6ED65A00E41DB2 /* NotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesView.swift; sourceTree = "<group>"; };
+		0F33BFBC2B6ED67E00E41DB2 /* HealthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthView.swift; sourceTree = "<group>"; };
+		0F33BFBE2B6ED68900E41DB2 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,7 +109,12 @@
 			isa = PBXGroup;
 			children = (
 				0F33BF872B6ECD2100E41DB2 /* starfallApp.swift */,
-				0F33BF892B6ECD2100E41DB2 /* ContentView.swift */,
+				0F33BF892B6ECD2100E41DB2 /* MainView.swift */,
+				0F33BFBE2B6ED68900E41DB2 /* CalendarView.swift */,
+				0F33BFBC2B6ED67E00E41DB2 /* HealthView.swift */,
+				0F33BFBA2B6ED65A00E41DB2 /* NotesView.swift */,
+				0F33BFB82B6ED63C00E41DB2 /* FocusView.swift */,
+				0F33BFB62B6ED55300E41DB2 /* TasksView.swift */,
 				0F33BF8B2B6ECD2400E41DB2 /* Assets.xcassets */,
 				0F33BF902B6ECD2400E41DB2 /* Persistence.swift */,
 				0F33BF922B6ECD2400E41DB2 /* starfall.xcdatamodeld */,
@@ -263,10 +278,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F33BFBB2B6ED65A00E41DB2 /* NotesView.swift in Sources */,
 				0F33BF912B6ECD2400E41DB2 /* Persistence.swift in Sources */,
-				0F33BF8A2B6ECD2100E41DB2 /* ContentView.swift in Sources */,
+				0F33BF8A2B6ECD2100E41DB2 /* MainView.swift in Sources */,
 				0F33BF942B6ECD2400E41DB2 /* starfall.xcdatamodeld in Sources */,
+				0F33BFBD2B6ED67E00E41DB2 /* HealthView.swift in Sources */,
+				0F33BFBF2B6ED68900E41DB2 /* CalendarView.swift in Sources */,
 				0F33BF882B6ECD2100E41DB2 /* starfallApp.swift in Sources */,
+				0F33BFB72B6ED55300E41DB2 /* TasksView.swift in Sources */,
+				0F33BFB92B6ED63C00E41DB2 /* FocusView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
