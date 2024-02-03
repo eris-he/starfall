@@ -77,10 +77,10 @@ struct MainView: View {
             }
             .padding()
             .frame(maxWidth: .infinity)
-            .background(Color("bg-color")) // Ensure this matches your ZStack's background
+            .background(Color("bg-color"))
             .cornerRadius(10)
         }
-        .buttonStyle(PlainButtonStyle()) // Use PlainButtonStyle to prevent button highlighting effect
+        .buttonStyle(PlainButtonStyle())
     }
     
     // Function to return the appropriate destination view
