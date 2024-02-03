@@ -22,6 +22,7 @@
 		0F33BFBD2B6ED67E00E41DB2 /* HealthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F33BFBC2B6ED67E00E41DB2 /* HealthView.swift */; };
 		0F33BFBF2B6ED68900E41DB2 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F33BFBE2B6ED68900E41DB2 /* CalendarView.swift */; };
 		0FC340B52B6EDC7C0071E1F4 /* OverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC340B42B6EDC7C0071E1F4 /* OverviewView.swift */; };
+		9FF1AB5F2B6EE90C00DE23DA /* NoteDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF1AB5E2B6EE90C00DE23DA /* NoteDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 		0F33BFBC2B6ED67E00E41DB2 /* HealthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthView.swift; sourceTree = "<group>"; };
 		0F33BFBE2B6ED68900E41DB2 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		0FC340B42B6EDC7C0071E1F4 /* OverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewView.swift; sourceTree = "<group>"; };
+		9FF1AB5E2B6EE90C00DE23DA /* NoteDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +124,7 @@
 				0F33BF902B6ECD2400E41DB2 /* Persistence.swift */,
 				0F33BF922B6ECD2400E41DB2 /* starfall.xcdatamodeld */,
 				0F33BF8D2B6ECD2400E41DB2 /* Preview Content */,
+				9FF1AB5E2B6EE90C00DE23DA /* NoteDetailView.swift */,
 			);
 			path = starfall;
 			sourceTree = "<group>";
@@ -288,6 +291,7 @@
 				0F33BF942B6ECD2400E41DB2 /* starfall.xcdatamodeld in Sources */,
 				0F33BFBD2B6ED67E00E41DB2 /* HealthView.swift in Sources */,
 				0F33BFBF2B6ED68900E41DB2 /* CalendarView.swift in Sources */,
+				9FF1AB5F2B6EE90C00DE23DA /* NoteDetailView.swift in Sources */,
 				0F33BF882B6ECD2100E41DB2 /* starfallApp.swift in Sources */,
 				0F33BFB72B6ED55300E41DB2 /* TasksView.swift in Sources */,
 				0F33BFB92B6ED63C00E41DB2 /* FocusView.swift in Sources */,
