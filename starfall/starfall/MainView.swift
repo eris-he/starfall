@@ -90,7 +90,14 @@ struct MainView: View {
             return AnyView(TasksView())
         case "Calendar":
             return AnyView(CalendarView())
-        // Add more cases for your other views
+        case "Focus":
+            return AnyView(FocusView())
+        case "Notes":
+            return AnyView(NotesView())
+        case "Health":
+            return AnyView(HealthView())
+        case "Overview":
+            return AnyView(OverviewView())
         default:
             return AnyView(Text("Not Implemented"))
         }
