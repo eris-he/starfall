@@ -51,16 +51,25 @@ struct NotesView: View {
     }
 
     private func deleteNotes(offsets: IndexSet) {
-        // Your implementation for deleting notes
+        withAnimation {
+            offsets.map { notes[$0] }.forEach(viewContext.delete)
+            do {
+                try viewContext.save()
+            } catch {
+                // Handle the error appropriately
+                print(error.localizedDescription)
+            }
+        }
     }
 }
 
 struct NotesView_Previews: PreviewProvider {
     static var previews: some View {
         // Setup the in-memory persistent container
-        let persistentContainer = NSPersistentContainer(name: "starfall") // Replace "YourModel" with the name of your Core Data model file
+        let persistentContainer = NSPersistentContainer(name: "starfall")
         let description = NSPersistentStoreDescription()
         description.type = NSInMemoryStoreType // This makes it in-memory
+        
         persistentContainer.persistentStoreDescriptions = [description]
         persistentContainer.loadPersistentStores { _, error in
             if let error = error as NSError? {

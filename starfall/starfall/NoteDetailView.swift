@@ -16,6 +16,7 @@ struct NoteEditView: View {
             Button("Save") {
                 saveNote()
             }
+            .buttonStyle(PressedButtonStyle())
         }
         .navigationTitle("Edit Note")
     }
@@ -27,6 +28,16 @@ struct NoteEditView: View {
             print("Failed to save note: \(error.localizedDescription)")
             // Handle the error appropriately
         }
+    }
+}
+
+struct PressedButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .foregroundColor(.white)
+            .padding()
+            .background(configuration.isPressed ? Color.gray : Color.blue)
+            .cornerRadius(10)
     }
 }
 
