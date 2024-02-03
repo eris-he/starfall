@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "3d-cartoon-planet-earth-icon-png.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "3d-cartoon-planet-earth-icon-png 1.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "3d-cartoon-planet-earth-icon-png 2.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
