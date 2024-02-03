@@ -20,7 +20,7 @@ struct MainView: View {
         NavigationView {
             VStack{
                 NavigationLink(destination: FocusView()) {
-                Text("Focus")
+                    Text("Focus")
                 }
                 NavigationLink(destination: TasksView()) {
                     Text("Tasks")
@@ -61,6 +61,7 @@ struct MainView: View {
 //            }
 //            Text("Select an item")
         }
+        .background(Color.red)
     }
 
     private func addItem() {
