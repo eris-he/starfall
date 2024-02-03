@@ -25,14 +25,17 @@ struct MainView: View {
                 NavigationLink(destination: TasksView()) {
                     Text("Tasks")
                 }
+                NavigationLink(destination: CalendarView()) {
+                    Text("Calendar")
+                }
                 NavigationLink(destination: NotesView()) {
                     Text("Notes")
                 }
                 NavigationLink(destination: HealthView()) {
                     Text("Health")
                 }
-                NavigationLink(destination: CalendarView()) {
-                    Text("Calendar")
+                NavigationLink(destination: OverviewView()) {
+                    Text("Overview")
                 }
             }
             

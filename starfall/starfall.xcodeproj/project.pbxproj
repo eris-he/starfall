@@ -21,6 +21,7 @@
 		0F33BFBB2B6ED65A00E41DB2 /* NotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F33BFBA2B6ED65A00E41DB2 /* NotesView.swift */; };
 		0F33BFBD2B6ED67E00E41DB2 /* HealthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F33BFBC2B6ED67E00E41DB2 /* HealthView.swift */; };
 		0F33BFBF2B6ED68900E41DB2 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F33BFBE2B6ED68900E41DB2 /* CalendarView.swift */; };
+		0FC340B52B6EDC7C0071E1F4 /* OverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC340B42B6EDC7C0071E1F4 /* OverviewView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 		0F33BFBA2B6ED65A00E41DB2 /* NotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesView.swift; sourceTree = "<group>"; };
 		0F33BFBC2B6ED67E00E41DB2 /* HealthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthView.swift; sourceTree = "<group>"; };
 		0F33BFBE2B6ED68900E41DB2 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		0FC340B42B6EDC7C0071E1F4 /* OverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +112,7 @@
 			children = (
 				0F33BF872B6ECD2100E41DB2 /* starfallApp.swift */,
 				0F33BF892B6ECD2100E41DB2 /* MainView.swift */,
+				0FC340B42B6EDC7C0071E1F4 /* OverviewView.swift */,
 				0F33BFBE2B6ED68900E41DB2 /* CalendarView.swift */,
 				0F33BFBC2B6ED67E00E41DB2 /* HealthView.swift */,
 				0F33BFBA2B6ED65A00E41DB2 /* NotesView.swift */,
@@ -281,6 +284,7 @@
 				0F33BFBB2B6ED65A00E41DB2 /* NotesView.swift in Sources */,
 				0F33BF912B6ECD2400E41DB2 /* Persistence.swift in Sources */,
 				0F33BF8A2B6ECD2100E41DB2 /* MainView.swift in Sources */,
+				0FC340B52B6EDC7C0071E1F4 /* OverviewView.swift in Sources */,
 				0F33BF942B6ECD2400E41DB2 /* starfall.xcdatamodeld in Sources */,
 				0F33BFBD2B6ED67E00E41DB2 /* HealthView.swift in Sources */,
 				0F33BFBF2B6ED68900E41DB2 /* CalendarView.swift in Sources */,
