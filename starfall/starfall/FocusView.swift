@@ -71,7 +71,7 @@ struct FocusView: View {
 struct CircularTimerView: View {
     
     let timerIncrements = 15 * 60
-    let maxTime = 240 * 60
+    let maxTime = 180 * 60
     @Binding var selectedTime: Int
     @Binding var timerIsActive: Bool
     private let feedbackGenerator = UIImpactFeedbackGenerator(style: .light)
@@ -116,6 +116,7 @@ struct CircularTimerView: View {
             )
             
             //==================== TESTING BLOCK FOR TESTING ONLY ====================
+            Spacer()
             Group {
                 Button("Add 15 Minute Timer") {
                     testComplete(focusMinutes: 15)

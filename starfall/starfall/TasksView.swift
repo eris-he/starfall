@@ -264,7 +264,7 @@ struct SingleTaskView: View {
     }
 
     // Use the cache in your function
-    func assignPositionToStar(_ star: Star, in weeklyStarFarm: WeeklyStarFarm, context: NSManagedObjectContext, starSize: Int = 30, canvasWidth: Int = Int(CanvasDimensions.shared.width), canvasHeight: Int = Int(CanvasDimensions.shared.height)) {
+    func assignPositionToStar(_ star: Star, in weeklyStarFarm: WeeklyStarFarm, context: NSManagedObjectContext, starSize: Int = 30, canvasWidth: Int = Int(CanvasDimensions.shared.width), canvasHeight: Int = Int(CanvasDimensions.shared.height) - 125) {
         guard let starsSet = weeklyStarFarm.stars as? Set<Star> else { return }
 
         // Initialize and populate the cache
@@ -274,7 +274,7 @@ struct SingleTaskView: View {
         // Find an unoccupied position using the cache
         if let position = cache.findUnoccupiedPosition() {
             let adjustedX = position.x * starSize + starSize / 2
-            let adjustedY = position.y * starSize + starSize / 2
+            let adjustedY = position.y * starSize + starSize / 2 + 125
             star.x = Int16(adjustedX)
             star.y = Int16(adjustedY)
         } else {
