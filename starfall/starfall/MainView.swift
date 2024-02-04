@@ -9,6 +9,13 @@ import SwiftUI
 import CoreData
 
 struct MainView: View {
+    
+    let persistenceController = PersistenceController.shared
+    
+    init() {
+        ensureWeeklyStarFarmExists(for: Date(), in: persistenceController.container.viewContext)
+    }
+    
     let buttons = [
         ("Tasks", "planet-1"),
         ("Calendar", "planet-2"),
@@ -28,6 +35,10 @@ struct MainView: View {
                     starGarden()
                         .frame(maxWidth: .infinity, maxHeight: 300)
                     
+                    Divider()
+                        .background(Color.white)
+                        .padding(.horizontal)
+                    
                     // Grid layout for the rest of the buttons
                     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
                         ForEach(buttons, id: \.0) { button in
@@ -42,21 +53,22 @@ struct MainView: View {
     
     @ViewBuilder
     private func starGarden() -> some View {
-        VStack {
+        ZStack {
 
-            Text("Placeholder for star garden")
-                .foregroundColor(.white)
-                .font(.custom("Futura-Medium", size:18))
+            StarFarm()
 
-            NavigationLink(destination: FocusView()) {
-                Text("Focus")
-                    .foregroundColor(.white)
-                    .padding()
-                    .background(Color.blue) // Customize the background color
-                    .cornerRadius(10)
-                    .font(.custom("Futura-Medium", size: 24))
+            VStack{
+                Spacer() 
+                NavigationLink(destination: FocusView()) {
+                    Text("Focus")
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Color.blue) // Customize the background color
+                        .cornerRadius(10)
+                        .font(.custom("Futura-Medium", size: 24))
+                }
+                .buttonStyle(PlainButtonStyle()) // Use PlainButtonStyle to prevent button highlighting effect
             }
-            .buttonStyle(PlainButtonStyle()) // Use PlainButtonStyle to prevent button highlighting effect
         }
     }
     
@@ -104,7 +116,18 @@ struct MainView: View {
     }
 }
 
-
+func dateOfLastSunday() -> Date {
+    let calendar = Calendar.current
+    let today = Date()
+    let weekday = calendar.component(.weekday, from: today)
+    // Calculate the difference from today to the last Sunday
+    let daysToSubtract = weekday == 1 ? 0 : -(weekday - 1)
+    let lastSunday = calendar.date(byAdding: .day, value: daysToSubtract, to: today)!
+    
+    // Reset to the start of the day
+    let components = calendar.dateComponents([.year, .month, .day], from: lastSunday)
+    return calendar.date(from: components)!
+}
 
 private let itemFormatter: DateFormatter = {
     let formatter = DateFormatter()
