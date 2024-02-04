@@ -49,45 +49,63 @@ struct NotesView: View {
                     Section() {
                         ForEach(folders, id: \.self) { folder in
                             Button(action: {
-                                self.selectedFolder = folder
+                                // Toggle selection on tap
+                                self.selectedFolder = self.selectedFolder == folder ? nil : folder
                             }) {
                                 HStack {
                                     Image(systemName: "folder") // System folder icon
-                                        .foregroundColor(.white)
+                                        .foregroundColor(.yellow) // Color the icon
                                     Text(folder.folderName ?? "Untitled Folder")
                                         .foregroundColor(.white)
-                                        .font(.headline)
                                 }
                             }
                             .listRowBackground(Color("bg-color"))
+
+                            // Conditionally display the notes for the selected folder
+                            if selectedFolder == folder {
+                                ForEach(folder.folderNotes?.allObjects as? [Note] ?? [], id: \.self) { note in
+                                    NavigationLink(destination: NoteEditView(note: note)) {
+                                        Text(note.noteTitle ?? "Untitled")
+                                            .foregroundColor(.white)
+                                    }
+                                    .listRowBackground(Color("bg-color"))
+                                }
+                            }
                         }
 //                        Divider()
 //                            .background(Color("bg-color"))
                     }
-                    ForEach(notes, id: \.self) { note in
-                         VStack {
+                    Section() {
+                        ForEach(notes.filter { $0.noteFolder == nil }, id: \.self) { note in
                             NavigationLink(destination: NoteEditView(note: note)) {
-                                VStack(alignment: .leading) {
-                                    Text(note.noteTitle ?? "Untitled")
+                                HStack(alignment: .center) {
+                                    Image(systemName: "doc")
                                         .foregroundColor(.white)
-                                        .font(.headline)
-                                        .lineLimit(1)
-                                        .truncationMode(.tail)
-                                    Text(note.noteBody ?? "No content")
-                                        .foregroundColor(.white)
-                                        .font(.subheadline)
-                                        .lineLimit(1)
-                                        .truncationMode(.tail)
+                                    VStack(alignment: .leading) {
+                                        Text(note.noteTitle ?? "Untitled")
+                                            .foregroundColor(.white)
+                                            .font(.headline)
+                                            .lineLimit(1)
+                                            .truncationMode(.tail)
+                                        if let noteBody = note.noteBody, !noteBody.isEmpty {
+                                            Text(noteBody)
+                                                .foregroundColor(.white)
+                                                .font(.subheadline)
+                                                .lineLimit(1)
+                                                .truncationMode(.tail)
+                                        }
+                                    }
+                                    .background(Color("bg-color"))
                                 }
+                                .frame(maxWidth: .infinity, alignment: .leading) // This ensures the HStack takes full width
+                                .background(Color("bg-color"))
                             }
+                            .listRowBackground(Color("bg-color"))
                             .background(Color("bg-color"))
-                            Divider()
-                                .background(Color("separator-color"))
-                                .padding(0)
                         }
-                        .listRowBackground(Color("bg-color"))
+                        .onDelete(perform: deleteNotes)
                     }
-                    .onDelete(perform: deleteNotes)
+                    .listRowBackground(Color("bg-color"))
                 }
                 .listStyle(PlainListStyle()) // Use PlainListStyle for the list
                 .navigationTitle("Notes")

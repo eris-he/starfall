@@ -17,7 +17,6 @@ struct NoteEditView: View {
 
     @State private var tempTitle: String = ""
 
-    
     var body: some View {
         NavigationView {
             ScrollView {
