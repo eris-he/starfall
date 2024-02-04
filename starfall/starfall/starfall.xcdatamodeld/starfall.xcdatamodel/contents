@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="22G74" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-<<<<<<< Updated upstream
     <entity name="Folder" representedClassName="Folder" syncable="YES" codeGenerationType="class">
         <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="folderName" optional="YES" attributeType="String"/>
         <relationship name="folderNotes" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Note" inverseName="noteFolder" inverseEntity="Note"/>
-=======
+    </entity>
     <entity name="Flower" representedClassName="Flower" syncable="YES" codeGenerationType="class">
         <attribute name="isVisible" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="plant_no" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
@@ -16,7 +15,6 @@
         <attribute name="timeCompleted" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="timeFocused" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="flower" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Flower" inverseName="timer" inverseEntity="Flower"/>
->>>>>>> Stashed changes
     </entity>
     <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
