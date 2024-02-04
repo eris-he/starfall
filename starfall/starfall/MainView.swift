@@ -19,10 +19,9 @@ struct MainView: View {
     
     let buttons = [
         ("Tasks", "planet-1"),
-        ("Calendar", "planet-2"),
+        ("Calendar", "planet-4"),
         ("Notes", "planet-3"),
-        ("Health", "planet-4"),
-        ("Overview", "planet-5")
+        ("Health", "planet-2"),
     ]
 
     var body: some View {
@@ -31,23 +30,29 @@ struct MainView: View {
                 Color("bg-color")
                     .ignoresSafeArea()
 
-                VStack(spacing: 20) {
+                VStack(spacing: 10) {
                     // Star garden area with the separate "Focus" button
                     starGarden()
                         .frame(maxWidth: .infinity, maxHeight: 300)
+                        .zIndex(1)
                     
 //                    Divider()
 //                        .background(Color.white)
 //                        .padding(.horizontal)
                     
                     // Grid layout for the rest of the buttons
-                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
+                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 0) {
                         ForEach(buttons, id: \.0) { button in
                             navigationButton(label: button.0, imageName: button.1)
                         }
                     }
                     .padding(.horizontal)
+                    .ignoresSafeArea(.container, edges: .bottom)
+                    .padding(.top, 5)
+
                 }
+                .zIndex(0) // This will bring the rocket image to the front
+
             }
         }
     }
@@ -58,28 +63,59 @@ struct MainView: View {
 
             StarFarm()
 
-            VStack{
-                Spacer() 
+            VStack {
+                Spacer()
                 NavigationLink(destination: FocusView()) {
-                    Text("Focus")
-                        .foregroundColor(.white)
-                        .padding()
-                        .background(Color.blue) // Customize the background color
-                        .cornerRadius(10)
-                        .font(.custom("Futura-Medium", size: 24))
+                    ZStack {
+                        Image("rocket") // Your rocket image from the assets
+                            .resizable()
+                            .scaledToFit() // This will ensure the image scales properly within the frame
+                            .frame(width: 650, height: 370) // Adjust the size as needed
+//                            .background(Color.blue) // Set the background color
+                            .cornerRadius(30) // Set the corner radius
+                            .offset(x: -23, y: 10) // Nudge the image 10 points right and 20 points up
+
+                            .rotationEffect(Angle(degrees: 35)) // Rotate the rocket image by 45 degrees
+                            .opacity(0.88)
+
+                        Text("Focus")
+                            .foregroundColor(.white)
+                            .shadow(color: .black, radius: 3)
+                            .bold()
+                            .font(.custom("Futura-Medium", size: 24))
+                    }
+                    .zIndex(1) // This will bring the rocket image to the front
+
                 }
-                .buttonStyle(PlainButtonStyle()) // Use PlainButtonStyle to prevent button highlighting effect
+//                .buttonStyle(PlainButtonStyle()) // Use PlainButtonStyle to prevent button highlighting effect
+                .frame(width: 100, height: 100) // Match this frame to the size of the image if needed
             }
         }
     }
     
     private func navigationButton(label: String, imageName: String) -> some View {
-        NavigationLink(destination: destinationView(for: label)) {
+        var imageWidth: CGFloat = 100 // Default width
+        var imageHeight: CGFloat = 100 // Default height
+        
+        if label == "Tasks" {
+            imageWidth = 170 // Adjust width for "Tasks" label
+            imageHeight = 170 // Adjust height for "Tasks" label
+        } else if label == "Calendar" {
+            imageWidth = 130 // Adjust width for "Calendar" label
+            imageHeight = 130 // Adjust height for "Calendar" label
+        } else if label == "Notes" {
+            imageWidth = 130 // Adjust width for "Label3" label
+            imageHeight = 130 // Adjust height for "Label3" label
+        } else if label == "Health" {
+            imageWidth = 180 // Adjust width for "Label4" label
+            imageHeight = 150 // Adjust height for "Label4" label
+        }
+
+        return NavigationLink(destination: destinationView(for: label)) {
             ZStack {
                 Image(imageName)
                     .resizable()
-                    .scaledToFit()
-                    .frame(width: 100, height: 100)
+                    .frame(width: imageWidth, height: imageHeight) // Use the individual width and height for each label
                     .foregroundColor(.white)
                     .opacity(0.7)
                 Text(label)
@@ -88,10 +124,15 @@ struct MainView: View {
                     .bold()
                     .font(.custom("Futura-Medium", size: 24))
             }
-            .padding()
+            .zIndex(0) // This will bring the rocket image to the front
+
+//            .padding()
+//            .ignoresSafeArea(.container, edges: .bottom)
             .frame(maxWidth: .infinity)
             .background(Color("bg-color"))
-            .cornerRadius(10)
+            .cornerRadius(1)
+
+
         }
         .buttonStyle(PlainButtonStyle())
     }
@@ -109,8 +150,6 @@ struct MainView: View {
             return AnyView(NotesView())
         case "Health":
             return AnyView(HealthView())
-        case "Overview":
-            return AnyView(OverviewView())
         default:
             return AnyView(Text("Not Implemented"))
         }
