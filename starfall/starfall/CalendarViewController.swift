@@ -8,7 +8,6 @@
 import UIKit
 import CalendarKit
 import EventKit
-import EventKitUI
 
 class CalendarViewController: DayViewController {
     let store = EKEventStore()
@@ -24,14 +23,6 @@ class CalendarViewController: DayViewController {
         }
     }
     
-    func subscribeToNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(storeChanged(_ :)), name: .EKEventStoreChanged, object: nil)
-    }
-    
-    @objc func storeChanged(_ notification: Notification) {
-        reloadData()
-    }
-    
     override func eventsForDate(_ date: Date) -> [EventDescriptor] {
         let startDate = date
         var oneDayComponents = DateComponents()
@@ -43,21 +34,17 @@ class CalendarViewController: DayViewController {
         
         let eventKitEvents = store.events(matching: predicate)
         
-        let calendarKitEvents = eventKitEvents.map(EKWrapper.init)
-        
-        return calendarKitEvents
-    }
-    
-    override func dayViewDidSelectEventView(_ eventView: EventView) {
-        guard let ckEvent = eventView.descriptor as? EKWrapper else {
-            return
+        let calendarKitEvents = eventKitEvents.map { ekEvent -> Event in
+            let ckEvent = Event()
+            ckEvent.dateInterval.start = ekEvent.startDate
+            ckEvent.dateInterval.end = ekEvent.endDate
+            ckEvent.isAllDay = ekEvent.isAllDay
+            ckEvent.text = ekEvent.title
+            if let eventColor = ekEvent.calendar.cgColor {
+                ckEvent.color = UIColor(cgColor: eventColor)
+            }
+            return ckEvent
         }
-        
-        let ekEvent = ckEvent.ekEvent
-        let eventViewController = EKEventViewController()
-        eventViewController.event = ekEvent
-        eventViewController.allowsCalendarPreview = true
-        eventViewController.allowsEditing = true
-        navigationController?.pushViewController(eventViewController, animated: true)
+        return calendarKitEvents
     }
 }
