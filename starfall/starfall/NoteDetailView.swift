@@ -1,9 +1,19 @@
 import SwiftUI
+import CoreData
 
 struct NoteEditView: View {
+    @FetchRequest(
+        entity: Folder.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \Folder.folderName, ascending: true)],
+        animation: .default
+    ) var folders: FetchedResults<Folder>
+
     @ObservedObject var note: Note
     @Environment(\.managedObjectContext) var viewContext
     @Environment(\.presentationMode) var presentationMode // Add this line
+    
+    @State private var selectedFolderID: NSManagedObjectID? // State to track the selected folder ID
+
 
     @State private var tempTitle: String = ""
 
@@ -12,6 +22,26 @@ struct NoteEditView: View {
         NavigationView {
             ScrollView {
                 VStack {
+                    HStack {
+                        if let folderName = note.noteFolder?.folderName {
+                            HStack {
+                                Image(systemName: "folder") // Folder icon
+                                    .foregroundColor(.yellow) // Folder icon color
+                                Text(folderName)
+                                    .foregroundColor(.white)
+                                    .font(.headline)
+                            }
+                            .padding() // Add some padding around the folder name
+                        }
+                        Picker("Folder", selection: $selectedFolderID) {
+                            Text("No Folder").tag(NSManagedObjectID?.none)
+                            ForEach(folders, id: \.self) { folder in
+                                Text(folder.folderName ?? "Unnamed Folder").tag(folder.objectID as NSManagedObjectID?)
+                                    .font(.headline)
+                            }
+                        }
+                        .pickerStyle(MenuPickerStyle())
+                    }
                     DatePicker(
                         "Date",
                         selection: Binding<Date>.safeUnwrap($note.noteDate, defaultValue: Date()),
@@ -21,6 +51,7 @@ struct NoteEditView: View {
                     .padding()
                     .background(Color("bg-color")) // Set the background color of DatePicker
                     .padding(.horizontal)
+                    
 
                     ZStack {
                         Color("bg-color")
@@ -74,19 +105,33 @@ struct NoteEditView: View {
                                // 2
                                for: .navigationBar)
         }
+        .onAppear {
+            self.tempTitle = note.noteTitle ?? ""
+            self.selectedFolderID = note.noteFolder?.objectID // Set the initial folder based on the note's current folder
+        }
         .background(Color("bg-color")) // Set the background color of NavigationView
         .accentColor(.white) // Set the accent color for the entire view, which affects the DatePicker
     }
     
     private func saveNote() {
+        // Find the selected folder by its ID
+        if let folderID = selectedFolderID,
+           let folder = viewContext.object(with: folderID) as? Folder {
+            note.noteFolder = folder
+        } else {
+            note.noteFolder = nil // If no folder is selected, set to nil
+        }
+        
+        // Continue with your existing save logic
         do {
             try viewContext.save()
-            self.presentationMode.wrappedValue.dismiss() // Add this line to dismiss the view
+            self.presentationMode.wrappedValue.dismiss()
         } catch {
             print("Failed to save note: \(error.localizedDescription)")
             // Handle the error appropriately
         }
     }
+
 }
 
 struct PressedButtonStyle: ButtonStyle {
