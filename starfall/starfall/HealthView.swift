@@ -20,32 +20,33 @@ struct HealthView: View {
                     .ignoresSafeArea()
                 VStack {
                     
-                    Spacer()
-                    
                     // PNG image with transparent background
-                    ZStack {
                         Image("sun") // Replace "your_image" with the name of your PNG image asset
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 150, height: 150)
-                            .padding()
                             .cornerRadius(10)
                             .shadow(color: .blue, radius: 10, x: 0, y: 0) // Add shadow effect
-                    }
+                            .padding(.top, 80) // Move the text up by adding top padding
+
+
                     
                     Text("How are you feeling today?")
                         .font(.title)
                         .foregroundColor(.white)
-                        .padding(.top, 10) // Move the text up by adding top padding
+                        .padding(.top, 40) // Move the text up by adding top padding
                     
-                    TextField("Enter here", text: $userInput)
+                    TextField("Enter here...", text: $userInput)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding()
+                        .padding(.trailing, 30)
+                        .padding(.leading, 30)
                     
                     Text("How was your sleep?")
                         .font(.title)
                         .foregroundColor(.white)
-                        .padding(.top, 10) // Move the text up by adding top padding
+                        .padding(.top, 35) // Move the text up by adding top padding
+
+
                     
                     Picker(selection: $sleepRating, label: Text("Sleep Rating")) {
                         ForEach(1..<11) { rating in
@@ -54,11 +55,11 @@ struct HealthView: View {
                         }
                     }
                     .pickerStyle(SegmentedPickerStyle()) // Use segmented picker style
-                    .padding()
-                    .foregroundColor(.white)
+                    .foregroundColor(Color.white)
                     .background(Color.indigo)
-                    .padding()
-                    .disabled(userInput.isEmpty) // Disable button if user input is empty
+                    .padding(.trailing, 30)
+                    .padding(.leading, 30)
+
                     
                     if isSaved {
                         Text("Data saved successfully")
@@ -67,22 +68,34 @@ struct HealthView: View {
                     }
                     Spacer()
                 }
-                .ignoresSafeArea()
             }
-            .edgesIgnoringSafeArea(.all)
-            .navigationBarItems(trailing: Button(action: {
-                // Update the note title with the temporary title before saving
-                saveToFile()
-            }) {
-                Text("Save")
-                    .foregroundColor(.white)
-                Image(systemName: "checkmark")
-                    .foregroundColor(.white) // Set the icon color to white
-            })
+            .navigationBarTitleDisplayMode(.inline) // Ensures that the title is in line with the toolbar
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Text("Journal")
+                        .foregroundColor(.white)
+                        .font(.headline)
+                }
+                
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        // Your save action here
+                        saveToFile()
+                    }) {
+                        HStack {
+                            Text("Save")
+                                .foregroundColor(.white)
+                            Image(systemName: "checkmark")
+                                .foregroundColor(.white)
+                        }
+                    }
+                }
+            }
             .toolbarBackground(.visible, for: .navigationBar)
             .toolbarBackground(Color.indigo,
                                // 2
                                for: .navigationBar)
+            
         }
     }
     
@@ -96,7 +109,7 @@ struct HealthView: View {
 
         let newNote = Note(context: viewContext) // Use the same viewContext that is injected into the environment
         newNote.noteTitle = "Health Note"
-        newNote.noteBody = "Mood: \(userInput)\nSleep Rating: \(sleepRating)"
+        newNote.noteBody = "Mood: \(userInput)\nSleep Rating: \(sleepRating+1)"
         newNote.noteDate = Date()
         newNote.noteFolder = healthFolder // Assign the note to the "Health Notes" folder
 
