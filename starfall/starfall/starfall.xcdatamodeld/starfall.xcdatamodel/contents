@@ -5,6 +5,17 @@
         <attribute name="folderName" optional="YES" attributeType="String"/>
         <relationship name="folderNotes" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Note" inverseName="noteFolder" inverseEntity="Note"/>
     </entity>
+    <entity name="Flower" representedClassName="Flower" syncable="YES" codeGenerationType="class">
+        <attribute name="isVisible" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="plant_no" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="x" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="timer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FocusTimer" inverseName="flower" inverseEntity="FocusTimer"/>
+    </entity>
+    <entity name="FocusTimer" representedClassName="FocusTimer" syncable="YES" codeGenerationType="class">
+        <attribute name="timeCompleted" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="timeFocused" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="flower" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Flower" inverseName="timer" inverseEntity="Flower"/>
+    </entity>
     <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
@@ -14,10 +25,23 @@
         <attribute name="noteTitle" optional="YES" attributeType="String"/>
         <relationship name="noteFolder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Folder" inverseName="folderNotes" inverseEntity="Folder"/>
     </entity>
+    <entity name="Star" representedClassName="Star" syncable="YES" codeGenerationType="class">
+        <attribute name="isVisible" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="x" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="y" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="task" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Task" inverseName="star" inverseEntity="Task"/>
+        <relationship name="weekFarm" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WeeklyStarFarm" inverseName="stars" inverseEntity="WeeklyStarFarm"/>
+    </entity>
     <entity name="Task" representedClassName="Task" syncable="YES" codeGenerationType="class">
         <attribute name="taskCheckbox" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="taskCompletedTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="taskContent" attributeType="String" defaultValueString="New Task"/>
         <attribute name="taskCreatedTime" attributeType="Date" defaultDateTimeInterval="728707260" usesScalarValueType="NO"/>
+        <relationship name="star" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Star" inverseName="task" inverseEntity="Star"/>
+    </entity>
+    <entity name="WeeklyStarFarm" representedClassName="WeeklyStarFarm" syncable="YES" codeGenerationType="class">
+        <attribute name="week" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="stars" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Star" inverseName="weekFarm" inverseEntity="Star"/>
+        <relationship name="timers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FocusTimer"/>
     </entity>
 </model>

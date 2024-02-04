@@ -17,7 +17,6 @@ struct NoteEditView: View {
 
     @State private var tempTitle: String = ""
 
-    
     var body: some View {
         NavigationView {
             ScrollView {
@@ -52,7 +51,6 @@ struct NoteEditView: View {
                     .background(Color("bg-color")) // Set the background color of DatePicker
                     .padding(.horizontal)
                     
-
                     ZStack {
                         Color("bg-color")
                             .ignoresSafeArea()

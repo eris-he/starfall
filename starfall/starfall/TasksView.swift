@@ -35,9 +35,9 @@ struct TasksView: View {
                     ForEach(tasks) { task in
                         SingleTaskView(task: task)
                             .listRowBackground(Color("bg-color"))
-                            .listRowSeparator(Visibility.visible)
                     }
                     .onDelete(perform: deleteTask)
+                    .padding(0)
                     
                     // This is the text field add button
                     HStack {
@@ -48,14 +48,14 @@ struct TasksView: View {
                             if newTaskContent.isEmpty {
                                 HStack{
                                     Text("New task")
-                                        .foregroundColor(.gray) // Placeholder text color
+                                        .foregroundColor(.gray)
                                         .padding(.leading, 5)
                                     Spacer()
                                 }
                             }
                             
                             TextField("", text: $newTaskContent)
-                                .foregroundColor(.white) // Text color
+                                .foregroundColor(.white)
                                 .padding(5)
                         }
                         .frame(height: 36)
@@ -63,6 +63,7 @@ struct TasksView: View {
                         Button(action: addTask) {
                             Image(systemName: "plus.circle.fill")
                                 .foregroundColor(.green)
+                                .padding(.horizontal, 4)
                         }
                     }
                     .background(Color("bg-color"))
@@ -80,10 +81,16 @@ struct TasksView: View {
     private func addTask() {
         withAnimation {
             let newTask = Task(context: viewContext)
+            let newStar = Star(context: viewContext) // Create a new Star entity
+            
+            // Configure the Task entity
             newTask.taskContent = newTaskContent
             newTask.taskCreatedTime = Date()
             newTask.taskCheckbox = false
-            newTask.taskCompletedTime = nil // Since the task is not completed yet
+            newTask.taskCompletedTime = nil
+            
+            // Associate the Task with the Star
+            newTask.star = newStar // Assuming 'star' is the relationship name in Task entity
             
             // Clear the input field
             newTaskContent = ""
@@ -121,32 +128,90 @@ struct SingleTaskView: View {
 
     var body: some View {
         VStack {
-            HStack (alignment: .top) {
+            HStack {
                 // Checkbox representation
                 Button(action: {
                     // Toggle task completion status
                     task.taskCheckbox.toggle()
-
-                    // If task is now completed, set the completion time
-                    if task.taskCheckbox {
-                        task.taskCompletedTime = Date()
-                    } else {
-                        task.taskCompletedTime = nil
+                    
+                    // Save context function to avoid redundancy
+                    func saveContext() {
+                        do {
+                            try viewContext.save()
+                        } catch {
+                            print("Error saving context: \(error.localizedDescription)")
+                        }
                     }
 
-                    // Save context
-                    try? viewContext.save()
+                    if task.taskCheckbox {
+                        task.taskCompletedTime = Date()
+
+                        // Fetch the most recent WeeklyStarFarm
+                        let fetchRequest: NSFetchRequest<WeeklyStarFarm> = WeeklyStarFarm.fetchRequest()
+                        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "week", ascending: false)]
+                        fetchRequest.fetchLimit = 1
+
+                        do {
+                            let results = try viewContext.fetch(fetchRequest)
+                            if let mostRecentWeeklyStarFarm = results.first {
+                                // Fetch the star's currently associated WeeklyStarFarm for comparison
+                                let starWeeklyStarFarm = task.star?.weekFarm
+                                
+                                if starWeeklyStarFarm == mostRecentWeeklyStarFarm {
+                                    // If the star's associated WeeklyStarFarm is the most recent one
+                                    task.star?.isVisible = true // Only toggle visibility
+                                } else {
+                                    // If the star does not have an associated WeeklyStarFarm, or it's not the most recent
+                                    task.star?.weekFarm = mostRecentWeeklyStarFarm
+                                    task.star?.isVisible = true
+                                    
+                                    // Assign new position to the star if it's being associated with a new WeeklyStarFarm
+                                    if task.star?.weekFarm != starWeeklyStarFarm {
+                                        assignPositionToStar(task.star!, in: mostRecentWeeklyStarFarm, context: viewContext)
+                                    }
+                                }
+                            }
+                        } catch {
+                            print("Failed to fetch the most recent WeeklyStarFarm: \(error)")
+                        }
+                    } else {
+                        task.taskCompletedTime = nil
+                        
+                        task.star?.isVisible = false // Set isVisible to false
+                        
+                        // Fetch the most recent WeeklyStarFarm
+                        let fetchRequest: NSFetchRequest<WeeklyStarFarm> = WeeklyStarFarm.fetchRequest()
+                        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "week", ascending: false)]
+                        fetchRequest.fetchLimit = 1
+                        
+                        do {
+                            let results = try viewContext.fetch(fetchRequest)
+                            if let mostRecentWeeklyStarFarm = results.first, mostRecentWeeklyStarFarm != task.star?.weekFarm {
+                                // If the associated WeeklyStarFarm is not the most recent, remove association and reset attributes
+                                task.star?.weekFarm = nil
+                                task.star?.x = 0
+                                task.star?.y = 0
+                            }
+                        } catch {
+                            print("Failed to fetch the most recent WeeklyStarFarm: \(error)")
+                        }
+                        
+                        // Save the updated context if only the completion time was updated
+                        saveContext()
+                    }
                 }) {
                     Image(systemName: task.taskCheckbox ? "checkmark.square.fill" : "square")
                         .foregroundColor(task.taskCheckbox ? .green : .gray)
                 }
                 .buttonStyle(BorderlessButtonStyle())
+                .padding(0)
 
                 // Collapsible Text with conditional styling
                 Text(task.taskContent ?? "")
                     .lineLimit(isExpanded ? nil : 1)
                     .foregroundColor(task.taskCheckbox ? .gray : .white) // Greyed out if completed
                     .strikethrough(task.taskCheckbox, color: .gray) // Strikethrough if completed
+                    .padding(0)
                     .onTapGesture {
                         // Expand or collapse text
                         withAnimation {
@@ -161,6 +226,61 @@ struct SingleTaskView: View {
                 .padding(0)
         }
         
+    }
+    
+    // Assuming a structure to manage the cache
+    struct PositionCache {
+        var occupied: [[Bool]]
+        let rows: Int
+        let columns: Int
+
+        init(canvasWidth: Int, canvasHeight: Int, starSize: Int) {
+            self.rows = canvasHeight / starSize
+            self.columns = canvasWidth / starSize
+            self.occupied = Array(repeating: Array(repeating: false, count: columns), count: rows)
+        }
+
+        mutating func updateCache(with starsSet: Set<Star>, starSize: Int) {
+            for star in starsSet {
+                let x = Int(star.x) / starSize
+                let y = Int(star.y) / starSize
+                if x < columns && y < rows {
+                    occupied[y][x] = true
+                }
+            }
+        }
+
+        func findUnoccupiedPosition() -> (x: Int, y: Int)? {
+            var potentialPositions: [(Int, Int)] = []
+            for row in 0..<rows {
+                for column in 0..<columns {
+                    if !occupied[row][column] {
+                        potentialPositions.append((column, row))
+                    }
+                }
+            }
+            return potentialPositions.randomElement()
+        }
+    }
+
+    // Use the cache in your function
+    func assignPositionToStar(_ star: Star, in weeklyStarFarm: WeeklyStarFarm, context: NSManagedObjectContext, starSize: Int = 30, canvasWidth: Int = 300, canvasHeight: Int = 300) {
+        guard let starsSet = weeklyStarFarm.stars as? Set<Star> else { return }
+
+        // Initialize and populate the cache
+        var cache = PositionCache(canvasWidth: canvasWidth, canvasHeight: canvasHeight, starSize: starSize)
+        cache.updateCache(with: starsSet, starSize: starSize)
+
+        // Find an unoccupied position using the cache
+        if let position = cache.findUnoccupiedPosition() {
+            let adjustedX = position.x * starSize + starSize / 2
+            let adjustedY = position.y * starSize + starSize / 2
+            star.x = Int16(adjustedX)
+            star.y = Int16(adjustedY)
+        } else {
+            // Handle the case where no position is found
+            print("Canvas is full or no available position found.")
+        }
     }
 }
 
