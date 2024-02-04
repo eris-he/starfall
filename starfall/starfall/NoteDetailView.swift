@@ -5,16 +5,13 @@ struct NoteEditView: View {
     @Environment(\.managedObjectContext) var viewContext
     @Environment(\.presentationMode) var presentationMode // Add this line
 
+    @State private var tempTitle: String = ""
+
+    
     var body: some View {
         NavigationView {
             ScrollView {
                 VStack {
-                    TextField("Title", text: Binding<String>.safeUnwrap($note.noteTitle, defaultValue: ""))
-                        .foregroundColor(.white) // Set the text color to white
-                        .padding()
-                        .background(Color("bg-color")) // Set the background color of TextField
-                        .padding(.horizontal)
-
                     DatePicker(
                         "Date",
                         selection: Binding<Date>.safeUnwrap($note.noteDate, defaultValue: Date()),
@@ -34,23 +31,43 @@ struct NoteEditView: View {
                             .padding(.horizontal)
                             .scrollContentBackground(.hidden) // to make background color work
                             .background(Color("bg-color"))
-                            
+                            .font(.custom("Futara-Medium", size: 20))
                     }
-
                 }
                 .background(Color("bg-color")) // Set the background color of VStack
             }
             .background(Color("bg-color")) // Set the background color of ScrollView
-            .navigationTitle(Binding<String>.safeUnwrap($note.noteTitle, defaultValue: "New Note").wrappedValue)
+            // Replace navigationTitle with a custom view that contains a TextField
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    TextField(
+                        "Title",
+                        text: $tempTitle,
+                        onCommit: {
+                            // Save the temporary title to the note when the user finishes editing
+                            note.noteTitle = tempTitle
+                            saveNote()
+                        }
+                    )
+                    .foregroundColor(.white)
+                    .font(.headline)
+                    .padding(4)
+                }
+            }
             .navigationBarItems(trailing: Button(action: saveNote) {
                 Text("Save")
                 Image(systemName: "checkmark")
                     .foregroundColor(.white) // Set the icon color to white
             })
-//            .navigationBarItems(trailing: Button("Save", action: saveNote)
-//                .foregroundColor(.white) // Set the button text color to white
-//            )
+            .background(Color("bg-color"))
+            .onAppear {
+                // Initialize the temporary title with the current note title
+                self.tempTitle = note.noteTitle ?? ""
+            }
+            .toolbarBackground(Color.black,
+                               // 2
+                               for: .navigationBar)
         }
         .background(Color("bg-color")) // Set the background color of NavigationView
         .accentColor(.white) // Set the accent color for the entire view, which affects the DatePicker
