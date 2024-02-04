@@ -98,7 +98,7 @@ struct MainView: View {
                         Image("cloud")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 400, height: 300)
+                            .frame(width: 400, height:200)
 
 
                         Text("Focus")

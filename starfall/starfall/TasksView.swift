@@ -274,7 +274,7 @@ struct SingleTaskView: View {
         // Find an unoccupied position using the cache
         if let position = cache.findUnoccupiedPosition() {
             let adjustedX = position.x * starSize + starSize / 2
-            let adjustedY = position.y * starSize + starSize / 2 + 125
+            let adjustedY = position.y * starSize + starSize / 2 - 125
             star.x = Int16(adjustedX)
             star.y = Int16(adjustedY)
         } else {
