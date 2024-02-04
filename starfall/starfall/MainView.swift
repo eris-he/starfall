@@ -10,6 +10,7 @@ import CoreData
 
 struct MainView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @State private var isLoading = true
 
     let persistenceController = PersistenceController.shared
     
@@ -25,44 +26,65 @@ struct MainView: View {
     ]
 
     var body: some View {
-        NavigationStack {
-            ZStack {
-                Color("bg-color")
-                    .ignoresSafeArea()
-
-                VStack(spacing: 10) {
-                    // Star garden area with the separate "Focus" button
-                    starGarden()
-                        .frame(maxWidth: .infinity, maxHeight: 300)
-                        .zIndex(1)
+        
+            
+            
+            
+            NavigationStack {
+                if isLoading {
+                    LoadingView().transition(.opacity)
+                } else {
+                ZStack {
+                    Color("bg-color")
+                        .ignoresSafeArea()
                     
-                    ZStack {
-                        VStack {
-                            Spacer()
-                            Image("star_banner")
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(height: UIScreen.main.bounds.height)
-                        }
-                        // Grid layout for the rest of the buttons
-                        LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 0) {
-                            ForEach(buttons, id: \.0) { button in
-                                navigationButton(label: button.0, imageName: button.1)
+                    
+                    
+                    VStack(spacing: 10) {
+                        
+                        
+                            // Star garden area with the separate "Focus" button
+                            starGarden()
+                                .frame(maxWidth: .infinity, maxHeight: 300)
+                                .zIndex(1)
+                            
+                            ZStack {
+                                VStack {
+                                    Spacer()
+                                    Image("star_banner")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .frame(height: UIScreen.main.bounds.height)
+                                }
+                                // Grid layout for the rest of the buttons
+                                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 0) {
+                                    ForEach(buttons, id: \.0) { button in
+                                        navigationButton(label: button.0, imageName: button.1)
+                                    }
+                                }
+                                .padding(.horizontal)
+                                .ignoresSafeArea(.container, edges: .bottom)
+                                .padding(.top, 5)
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width:UIScreen.main.bounds.width)
                             }
+                            .zIndex(0)
+                            
                         }
-                        .padding(.horizontal)
-                        .ignoresSafeArea(.container, edges: .bottom)
-                        .padding(.top, 5)
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width:UIScreen.main.bounds.width)
+                        
                     }
-                    .zIndex(0)
-
+                    
+                        }
+                        
+                    
+                    
                 }
-                
+                .accentColor(.white)
+                .onAppear {
+                    Timer.scheduledTimer(withTimeInterval: 2.9, repeats: false) { _ in
+                        isLoading = false
             }
         }
-        .accentColor(.white)
     }
     
     @ViewBuilder
