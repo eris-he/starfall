@@ -3,6 +3,7 @@ import SwiftUI
 struct NoteEditView: View {
     @ObservedObject var note: Note
     @Environment(\.managedObjectContext) var viewContext
+    @Environment(\.presentationMode) var presentationMode // Add this line
 
     var body: some View {
         NavigationView {
@@ -58,6 +59,7 @@ struct NoteEditView: View {
     private func saveNote() {
         do {
             try viewContext.save()
+            self.presentationMode.wrappedValue.dismiss() // Add this line to dismiss the view
         } catch {
             print("Failed to save note: \(error.localizedDescription)")
             // Handle the error appropriately
