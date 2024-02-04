@@ -14,33 +14,68 @@ struct NotesView: View {
     // State to hold the new note object to be edited
     @State private var newNote: Note?
 
+    init() {
+            // Configure the appearance of the navigation bar
+            let appearance = UINavigationBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            appearance.backgroundColor = UIColor(named: "YourDarkBlueColor") // Your dark blue color
+            appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+            appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
 
+            // Apply appearance to all navigation bar sizes
+            UINavigationBar.appearance().standardAppearance = appearance
+            UINavigationBar.appearance().compactAppearance = appearance
+            UINavigationBar.appearance().scrollEdgeAppearance = appearance
+
+            // Set the color for the back button and other bar button items
+            UINavigationBar.appearance().tintColor = .white
+        }
     var body: some View {
         NavigationView {
-            List {
-                ForEach(notes, id: \.self) { note in
-                    NavigationLink(destination: NoteEditView(note: note)) {
-                        VStack(alignment: .leading) {
-                            Text(note.noteTitle ?? "Untitled")
-                                .font(.headline)
-                                .lineLimit(1) // Ensures the title is only one line
-                                .truncationMode(.tail) // Truncates at the end if needed
-                            Text(note.noteBody ?? "No content")
-                                .font(.subheadline)
-                                .lineLimit(1) // Ensures the body is only one line
-                                .truncationMode(.tail) // Truncates at the end if needed
-                            // If you want to show the date as well, you can add it here.
+            ZStack {
+                // Set the background color for the entire ZStack
+                Color("bg-color").edgesIgnoringSafeArea(.all)
+
+                List {
+                    ForEach(notes, id: \.self) { note in
+                        VStack {
+                            NavigationLink(destination: NoteEditView(note: note)) {
+                                VStack(alignment: .leading) {
+                                    Text(note.noteTitle ?? "Untitled")
+                                        .foregroundColor(.white)
+                                        .font(.headline)
+                                        .lineLimit(1)
+                                        .truncationMode(.tail)
+                                    Text(note.noteBody ?? "No content")
+                                        .foregroundColor(.white)
+                                        .font(.subheadline)
+                                        .lineLimit(1)
+                                        .truncationMode(.tail)
+                                }
+                            }
+                            .background(Color("bg-color")) // Ensure background extends to edges
+
+                            // Set the Divider to be fully transparent or the same as the background
+                            Rectangle()
+                                .fill(Color("separator-color")) // Use your custom color for the separator
+                                .frame(height: 2) // Set the thickness of your divider
+                                .edgesIgnoringSafeArea(.horizontal) // Make it extend to the edges of the screen
                         }
+                        .listRowBackground(Color("bg-color"))
                     }
+                    .onDelete(perform: deleteNotes)
                 }
-                .onDelete(perform: deleteNotes)
+                .listStyle(PlainListStyle()) // Use PlainListStyle for the list
+                .navigationTitle("Notes")
+                .navigationBarItems(trailing: Button(action: addNote) {
+                    Image(systemName: "plus")
+                        .foregroundColor(.white) // Set the plus button color to white
+                })
             }
-            .navigationTitle("Notes")
-            .navigationBarItems(trailing: Button(action: addNote) {
-                Image(systemName: "plus")
-            })
         }
+        .navigationViewStyle(StackNavigationViewStyle())
     }
+
 
     private func addNote() {
         // Your implementation for adding a new note
