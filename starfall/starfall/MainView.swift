@@ -9,6 +9,7 @@ import SwiftUI
 import CoreData
 
 struct MainView: View {
+    @Environment(\.managedObjectContext) private var viewContext
     
     let persistenceController = PersistenceController.shared
     

@@ -28,6 +28,7 @@
 		0FC340BF2B6F95A40071E1F4 /* InMemoryCoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC340BE2B6F95A40071E1F4 /* InMemoryCoreDataStack.swift */; };
 		0FC340C12B6F95EA0071E1F4 /* starfall_test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC340C02B6F95EA0071E1F4 /* starfall_test.swift */; };
 		0FC340C32B6FA5CA0071E1F4 /* ek_wrapper_backup.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 0FC340C22B6FA5CA0071E1F4 /* ek_wrapper_backup.rtf */; };
+		0FC340C52B6FAE690071E1F4 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC340C42B6FAE690071E1F4 /* Globals.swift */; };
 		7ED388A62B6F883600636122 /* EKWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED388A52B6F883600636122 /* EKWrapper.swift */; };
 		7EEC2B482B6F1F8F0024825F /* CalendarKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7EEC2B472B6F1F8F0024825F /* CalendarKit */; };
 		7EEC2B4C2B6F24B70024825F /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEC2B4B2B6F24B70024825F /* CalendarViewController.swift */; };
@@ -76,6 +77,7 @@
 		0FC340BE2B6F95A40071E1F4 /* InMemoryCoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMemoryCoreDataStack.swift; sourceTree = "<group>"; };
 		0FC340C02B6F95EA0071E1F4 /* starfall_test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = starfall_test.swift; sourceTree = "<group>"; };
 		0FC340C22B6FA5CA0071E1F4 /* ek_wrapper_backup.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = ek_wrapper_backup.rtf; sourceTree = "<group>"; };
+		0FC340C42B6FAE690071E1F4 /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		7ED388A42B6F7FAE00636122 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		7ED388A52B6F883600636122 /* EKWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EKWrapper.swift; sourceTree = "<group>"; };
 		7EEC2B4B2B6F24B70024825F /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 				0F33BF872B6ECD2100E41DB2 /* starfallApp.swift */,
 				0F33BF892B6ECD2100E41DB2 /* MainView.swift */,
 				0FC340BA2B6F6AFE0071E1F4 /* StarFarm.swift */,
+				0FC340C42B6FAE690071E1F4 /* Globals.swift */,
 				0FC340BC2B6F760D0071E1F4 /* StarFarmProcessing.swift */,
 				0FC340B42B6EDC7C0071E1F4 /* OverviewView.swift */,
 				0F33BFBE2B6ED68900E41DB2 /* CalendarView.swift */,
@@ -332,6 +335,7 @@
 				0F33BFBD2B6ED67E00E41DB2 /* HealthView.swift in Sources */,
 				0F33BFBF2B6ED68900E41DB2 /* CalendarView.swift in Sources */,
 				9FF1AB5F2B6EE90C00DE23DA /* NoteDetailView.swift in Sources */,
+				0FC340C52B6FAE690071E1F4 /* Globals.swift in Sources */,
 				0F33BF882B6ECD2100E41DB2 /* starfallApp.swift in Sources */,
 				0F33BFB72B6ED55300E41DB2 /* TasksView.swift in Sources */,
 				0F33BFB92B6ED63C00E41DB2 /* FocusView.swift in Sources */,

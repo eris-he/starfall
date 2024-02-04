@@ -36,3 +36,4 @@ func ensureWeeklyStarFarmExists(for date: Date, in context: NSManagedObjectConte
         print("Failed to fetch or create WeeklyStarFarm: \(error)")
     }
 }
+
