@@ -52,7 +52,7 @@ struct StarFarm: View {
                     let scaledWidth = targetHeight * originalAspectRatio
                     
                     // Calculate the y-coordinate by subtracting from the canvas height
-                    let positionY = canvasHeight - targetHeight
+                    let positionY = canvasHeight - targetHeight - 75
                     
                     // Create a rect that centers the image at positionX and sets y to the calculated positionY
                     let rect = CGRect(x: positionX - scaledWidth / 2, y: positionY, width: scaledWidth, height: targetHeight)

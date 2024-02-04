@@ -10,7 +10,7 @@ import CoreData
 
 struct MainView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    
+
     let persistenceController = PersistenceController.shared
     
     init() {
@@ -36,23 +36,30 @@ struct MainView: View {
                         .frame(maxWidth: .infinity, maxHeight: 300)
                         .zIndex(1)
                     
-//                    Divider()
-//                        .background(Color.white)
-//                        .padding(.horizontal)
-                    
-                    // Grid layout for the rest of the buttons
-                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 0) {
-                        ForEach(buttons, id: \.0) { button in
-                            navigationButton(label: button.0, imageName: button.1)
+                    ZStack {
+                        VStack {
+                            Spacer()
+                            Image("star_banner")
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(height: UIScreen.main.bounds.height)
                         }
+                        // Grid layout for the rest of the buttons
+                        LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 0) {
+                            ForEach(buttons, id: \.0) { button in
+                                navigationButton(label: button.0, imageName: button.1)
+                            }
+                        }
+                        .padding(.horizontal)
+                        .ignoresSafeArea(.container, edges: .bottom)
+                        .padding(.top, 5)
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width:UIScreen.main.bounds.width)
                     }
-                    .padding(.horizontal)
-                    .ignoresSafeArea(.container, edges: .bottom)
-                    .padding(.top, 5)
+                    .zIndex(0)
 
                 }
-                .zIndex(0) // This will bring the rocket image to the front
-
+                
             }
         }
     }
@@ -60,34 +67,49 @@ struct MainView: View {
     @ViewBuilder
     private func starGarden() -> some View {
         ZStack {
+            VStack {
+                Spacer()
+                Image("starrystuff")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .mask(
+                        // Vertical gradient mask
+                        LinearGradient(gradient: Gradient(colors: [.clear, .black]), startPoint: .top, endPoint: .center)
+                    )
+            }
 
             StarFarm()
+                .frame(width:UIScreen.main.bounds.width)
 
+            VStack {
+                Spacer()
+                Image("black_dust")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: UIScreen.main.bounds.width)
+                    .opacity(0.6)
+            }
+            
             VStack {
                 Spacer()
                 NavigationLink(destination: FocusView()) {
                     ZStack {
-                        Image("rocket") // Your rocket image from the assets
+                        
+                        Image("cloud")
                             .resizable()
-                            .scaledToFit() // This will ensure the image scales properly within the frame
-                            .frame(width: 650, height: 370) // Adjust the size as needed
-//                            .background(Color.blue) // Set the background color
-                            .cornerRadius(30) // Set the corner radius
-                            .offset(x: -23, y: 10) // Nudge the image 10 points right and 20 points up
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 400, height: 300)
 
-                            .rotationEffect(Angle(degrees: 35)) // Rotate the rocket image by 45 degrees
-                            .opacity(0.88)
 
                         Text("Focus")
-                            .foregroundColor(.white)
-                            .shadow(color: .black, radius: 3)
+                            .foregroundColor(.black)
+                            .shadow(color: .white, radius: 5)
                             .bold()
-                            .font(.custom("Futura-Medium", size: 24))
+                            .font(.custom("Futura-Medium", size: 28))
                     }
                     .zIndex(1) // This will bring the rocket image to the front
 
                 }
-//                .buttonStyle(PlainButtonStyle()) // Use PlainButtonStyle to prevent button highlighting effect
                 .frame(width: 100, height: 100) // Match this frame to the size of the image if needed
             }
         }
@@ -117,7 +139,7 @@ struct MainView: View {
                     .resizable()
                     .frame(width: imageWidth, height: imageHeight) // Use the individual width and height for each label
                     .foregroundColor(.white)
-                    .opacity(0.7)
+                    .opacity(1)
                 Text(label)
                     .foregroundColor(.white)
                     .shadow(color: .black, radius: 3)
@@ -129,7 +151,6 @@ struct MainView: View {
 //            .padding()
 //            .ignoresSafeArea(.container, edges: .bottom)
             .frame(maxWidth: .infinity)
-            .background(Color("bg-color"))
             .cornerRadius(1)
 
 
