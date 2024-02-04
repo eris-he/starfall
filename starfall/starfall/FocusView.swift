@@ -6,8 +6,6 @@
 //
 
 import SwiftUI
-import RealityKit
-
 
 struct FocusView: View {
     
@@ -20,23 +18,57 @@ struct FocusView: View {
                 Text("Let's focus...")
                     .foregroundColor(.white)
                     .font(.custom("Futura-Medium", size: 24))
-                
-                let orbit = OrbitAnimation(name: "orbit",
-                    duration: 10.0,
-                    axis: SIMD3<Float>(x: 1.0, y: 0.0, z: 0.0),
-                    startTransform: Transform(scale: simd_float3(10,10,10),
-                    rotation: simd_quatf(ix: 10, iy: 20, iz: 20, r: 100),
-                    translation: simd_float3(11, 2, 3)),
-                    spinClockwise: false,
-                    orientToPath: true,
-                    rotationCount: 100.0,
-                    bindTarget: nil)
-
-
-                // Create an animation clip for just the second half of the orbit.
-                let trimmed = orbit.trimmed(start: 5.0, end: 10.0)
+                Spacer()
+                CircularTimerView()
+                Spacer()
             }
         }
+    }
+}
+
+struct CircularTimerView: View {
+    let timerIncrements = 15
+    let maxTime = 240
+    @State private var vectorVal: String = ""
+    @State private var selectedTime: Int = 0
+    @State private var angleStr: String = ""
+    private let feedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+    
+    var body: some View {
+        ZStack {
+            Circle()
+                .stroke(lineWidth: 20)
+                .foregroundColor(Color.gray.opacity(0.2))
+            
+            Circle()
+                .trim(from: 0, to: CGFloat(selectedTime) / CGFloat(maxTime))
+                .stroke(style: StrokeStyle(lineWidth: 20, lineCap: .round))
+                .foregroundColor(Color.blue)
+                .rotationEffect(Angle(degrees: -90))
+                .animation(.linear, value: selectedTime)
+            
+            Text("\(selectedTime) min")
+                .font(.title)
+                .foregroundColor(.white)
+            
+        }
+        .frame(width: 300, height: 300)
+        .gesture(
+            DragGesture(minimumDistance: 0)
+                .onChanged({ value in
+                    self.selectedTime = timeForGesture(value: value)
+                })
+        )
+    }
+    
+    func timeForGesture(value: DragGesture.Value) -> Int {
+        let vector = CGVector(dx: value.location.x - 150, dy: value.location.y - 150)
+        var angle = atan2(vector.dx, -vector.dy)
+        var degree = angle * 180 / Double.pi
+        degree = degree < 0 ? 360 + degree : degree
+        
+        let time = Int(degree / 360 * CGFloat(maxTime))
+        return time - (time % timerIncrements)
     }
 }
 
