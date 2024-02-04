@@ -51,7 +51,6 @@ struct NoteEditView: View {
                     .background(Color("bg-color")) // Set the background color of DatePicker
                     .padding(.horizontal)
                     
-
                     ZStack {
                         Color("bg-color")
                             .ignoresSafeArea()
