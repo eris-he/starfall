@@ -9,10 +9,21 @@ struct NotesView: View {
         animation: .default
     ) var notes: FetchedResults<Note>
     
+    @FetchRequest(
+        entity: Folder.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \Folder.folderName, ascending: true)],
+        animation: .default
+    ) var folders: FetchedResults<Folder>
+
     // State to manage the active state of the NavigationLink
     @State private var isAddingNewNote = false
     // State to hold the new note object to be edited
     @State private var newNote: Note?
+    
+    @State private var showingCreateFolder = false
+    @State private var newFolderName = ""
+    @State private var selectedFolder: Folder? = nil
+
 
     init() {
             // Configure the appearance of the navigation bar
@@ -33,12 +44,28 @@ struct NotesView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                // Set the background color for the entire ZStack
                 Color("bg-color").edgesIgnoringSafeArea(.all)
-
                 List {
+                    Section() {
+                        ForEach(folders, id: \.self) { folder in
+                            Button(action: {
+                                self.selectedFolder = folder
+                            }) {
+                                HStack {
+                                    Image(systemName: "folder") // System folder icon
+                                        .foregroundColor(.white)
+                                    Text(folder.folderName ?? "Untitled Folder")
+                                        .foregroundColor(.white)
+                                        .font(.headline)
+                                }
+                            }
+                            .listRowBackground(Color("bg-color"))
+                        }
+//                        Divider()
+//                            .background(Color("bg-color"))
+                    }
                     ForEach(notes, id: \.self) { note in
-                        VStack {
+                         VStack {
                             NavigationLink(destination: NoteEditView(note: note)) {
                                 VStack(alignment: .leading) {
                                     Text(note.noteTitle ?? "Untitled")
@@ -53,7 +80,7 @@ struct NotesView: View {
                                         .truncationMode(.tail)
                                 }
                             }
-                            .background(Color("bg-color")) // Ensure background extends to edges
+                            .background(Color("bg-color"))
                             Divider()
                                 .background(Color("separator-color"))
                                 .padding(0)
@@ -64,9 +91,33 @@ struct NotesView: View {
                 }
                 .listStyle(PlainListStyle()) // Use PlainListStyle for the list
                 .navigationTitle("Notes")
-                .navigationBarItems(trailing: Button(action: addNote) {
-                    Image(systemName: "plus")
-                        .foregroundColor(.white) // Set the plus button color to white
+                .navigationBarItems(trailing: HStack {
+                    Button(action: { self.showingCreateFolder = true }) {
+                        Image(systemName: "folder.badge.plus")
+                            .foregroundColor(.white)
+                    }
+                    Button(action: addNote) {
+                        Image(systemName: "plus")
+                            .foregroundColor(.white) // Set the plus button color to white
+                    }
+                })
+            }
+        } // End NavField
+        .sheet(isPresented: $showingCreateFolder) {
+            // Sheet content for creating a new folder
+            NavigationView {
+                Form {
+                    TextField("Folder Name", text: $newFolderName)
+                    Button("Create Folder") {
+                        createFolder(named: newFolderName)
+                        newFolderName = "" // Reset the folder name
+                        showingCreateFolder = false // Dismiss the sheet
+                    }
+                    .disabled(newFolderName.trimmingCharacters(in: .whitespaces).isEmpty)
+                }
+                .navigationBarTitle("New Folder", displayMode: .inline)
+                .navigationBarItems(trailing: Button("Cancel") {
+                    showingCreateFolder = false
                 })
             }
         }
@@ -98,6 +149,20 @@ struct NotesView: View {
             }
         }
     }
+    
+    private func createFolder(named name: String) {
+        let newFolder = Folder(context: viewContext)
+        newFolder.folderName = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        newFolder.creationDate = Date()
+
+        do {
+            try viewContext.save()
+        } catch {
+            // Handle the error appropriately
+            print("Error saving folder: \(error.localizedDescription)")
+        }
+    }
+
 }
 
 struct NotesView_Previews: PreviewProvider {
