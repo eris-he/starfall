@@ -22,21 +22,16 @@ struct NoteEditView: View {
             ScrollView {
                 VStack {
                     HStack {
-                        if let folderName = note.noteFolder?.folderName {
-                            HStack {
-                                Image(systemName: "folder") // Folder icon
-                                    .foregroundColor(.yellow) // Folder icon color
-                                Text(folderName)
-                                    .foregroundColor(.white)
-                                    .font(.headline)
-                            }
-                            .padding() // Add some padding around the folder name
-                        }
+                        Image(systemName: "folder") // System folder icon
+                            .foregroundColor(.yellow) // Color the icon
+                        Text("Current Folder: ") // Add this line
+                                .foregroundColor(.white)
+
                         Picker("Folder", selection: $selectedFolderID) {
                             Text("No Folder").tag(NSManagedObjectID?.none)
                             ForEach(folders, id: \.self) { folder in
                                 Text(folder.folderName ?? "Unnamed Folder").tag(folder.objectID as NSManagedObjectID?)
-                                    .font(.headline)
+                                    .font(.custom("Futura-Medium", size: 12))
                             }
                         }
                         .pickerStyle(MenuPickerStyle())
@@ -60,7 +55,7 @@ struct NoteEditView: View {
                             .padding(.horizontal)
                             .scrollContentBackground(.hidden) // to make background color work
                             .background(Color("bg-color"))
-                            .font(.custom("Futara-Medium", size: 20))
+                            .font(.custom("Futura-Medium", size: 20))
                     }
                 }
                 .background(Color("bg-color")) // Set the background color of VStack
