@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="22G74" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Folder" representedClassName="Folder" syncable="YES" codeGenerationType="class">
+        <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="folderName" optional="YES" attributeType="String"/>
+        <relationship name="folderNotes" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Note" inverseName="noteFolder" inverseEntity="Note"/>
+    </entity>
     <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
@@ -7,6 +12,7 @@
         <attribute name="noteBody" optional="YES" attributeType="String"/>
         <attribute name="noteDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="noteTitle" optional="YES" attributeType="String"/>
+        <relationship name="noteFolder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Folder" inverseName="folderNotes" inverseEntity="Folder"/>
     </entity>
     <entity name="Task" representedClassName="Task" syncable="YES" codeGenerationType="class">
         <attribute name="taskCheckbox" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
