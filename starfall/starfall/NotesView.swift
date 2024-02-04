@@ -89,8 +89,6 @@ struct NotesView: View {
                                 }
                             }
                         }
-//                        Divider()
-//                            .background(Color("bg-color"))
                     }
                     Section() {
                         ForEach(notes.filter { $0.noteFolder == nil }, id: \.self) { note in
