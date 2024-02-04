@@ -1,17 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "0813fec1fb0daeaa442f2fc9f90abcd8 2.png",
+      "filename" : "rocket.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "0813fec1fb0daeaa442f2fc9f90abcd8 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "0813fec1fb0daeaa442f2fc9f90abcd8 3.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

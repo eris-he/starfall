@@ -264,7 +264,7 @@ struct SingleTaskView: View {
     }
 
     // Use the cache in your function
-    func assignPositionToStar(_ star: Star, in weeklyStarFarm: WeeklyStarFarm, context: NSManagedObjectContext, starSize: Int = 30, canvasWidth: Int = 300, canvasHeight: Int = 300) {
+    func assignPositionToStar(_ star: Star, in weeklyStarFarm: WeeklyStarFarm, context: NSManagedObjectContext, starSize: Int = 30, canvasWidth: Int = Int(CanvasDimensions.shared.width), canvasHeight: Int = Int(CanvasDimensions.shared.height)) {
         guard let starsSet = weeklyStarFarm.stars as? Set<Star> else { return }
 
         // Initialize and populate the cache

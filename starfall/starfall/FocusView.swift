@@ -221,7 +221,7 @@ struct CircularTimerView: View {
         }
     }
     
-    func assignXPosition(for flower: Flower, in context: NSManagedObjectContext, isBigPlant: Bool, canvasWidth: Int = 300) {
+    func assignXPosition(for flower: Flower, in context: NSManagedObjectContext, isBigPlant: Bool, canvasWidth: Int = Int(CanvasDimensions.shared.width)) {
         let fetchRequest: NSFetchRequest<Flower> = Flower.fetchRequest()
         // If big plants can overlap any, but small cannot overlap another small, consider fetching only small plants if the current one is small.
 //        if !isBigPlant {
