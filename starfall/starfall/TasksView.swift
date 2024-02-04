@@ -244,8 +244,9 @@ struct SingleTaskView: View {
 
         mutating func updateCache(with starsSet: Set<Star>, starSize: Int) {
             for star in starsSet {
-                let x = Int(star.x) / starSize
-                let y = Int(star.y) / starSize
+                let position = CGPoint(x: CGFloat(star.x), y: CanvasDimensions.shared.height - CGFloat(star.y))
+                let x = Int(position.x)
+                let y = Int(position.y)
                 if x < columns && y < rows {
                     occupied[y][x] = true
                 }

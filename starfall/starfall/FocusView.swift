@@ -63,6 +63,42 @@ struct FocusView: View {
                 
                 Spacer()
                 
+                //==================== TESTING BLOCK FOR TESTING ONLY ====================
+                Text("Testing Buttons!")
+                    .foregroundColor(.white)
+                    .font(.custom("Futura-Medium", size:24))
+                Group {
+                    let source = CircularTimerView(selectedTime: $selectedTime, timerIsActive: $timerIsActive, managedObjectContext: managedObjectContext)
+                    Button("Add 15 Minute Timer") {
+                        source.testComplete(focusMinutes: 15)
+                    }
+                    .background(Color.black)
+                    .cornerRadius(8)
+                    
+                    Button("Add 45 Minute Timer") {
+                        source.testComplete(focusMinutes: 45)
+                    }
+                    .background(Color.black)
+                    .cornerRadius(8)
+                    
+                    Button("Add 90 Minute Timer") {
+                        source.testComplete(focusMinutes: 90)
+                    }
+                    .background(Color.black)
+                    .cornerRadius(8)
+                    
+                    Button("Add 120 Minute Timer") {
+                        source.testComplete(focusMinutes: 120)
+                    }
+                    .background(Color.black)
+                    .cornerRadius(8)
+                }
+                .foregroundColor(.white)
+                .font(.custom("Futura-Medium", size: 18))
+                
+                //==================== TESTING BLOCK FOR TESTING ONLY ====================
+                // EXTRACT FROM VSTACK WHEN DONE TESTING
+                
             }
         }
     }
@@ -115,42 +151,6 @@ struct CircularTimerView: View {
                     })
             )
             
-            //==================== TESTING BLOCK FOR TESTING ONLY ====================
-            Spacer()
-            Group {
-                Button("Add 15 Minute Timer") {
-                    testComplete(focusMinutes: 15)
-                }
-                .padding()
-                .background(Color.orange)
-                .cornerRadius(8)
-                
-                Button("Add 45 Minute Timer") {
-                    testComplete(focusMinutes: 45)
-                }
-                .padding()
-                .background(Color.purple)
-                .cornerRadius(8)
-                
-                Button("Add 90 Minute Timer") {
-                    testComplete(focusMinutes: 90)
-                }
-                .padding()
-                .background(Color.blue)
-                .cornerRadius(8)
-                
-                Button("Add 120 Minute Timer") {
-                    testComplete(focusMinutes: 120)
-                }
-                .padding()
-                .background(Color.green)
-                .cornerRadius(8)
-            }
-            .foregroundColor(.white)
-            .font(.custom("Futura-Medium", size: 18))
-            
-            //==================== TESTING BLOCK FOR TESTING ONLY ====================
-            // EXTRACT FROM VSTACK WHEN DONE TESTING
 
         }
 
@@ -169,7 +169,7 @@ struct CircularTimerView: View {
         flower.isVisible = false
         
         // Determine if the plant is big based on the focus duration
-        let isBigPlant = focusMinutes > 90 // More than 90 minutes for a big plant
+        let isBigPlant = focusMinutes > 60 // More than 60 minutes for a big plant
         flower.plant_no = isBigPlant ? Int16.random(in: 1...10) * 2 - 1 : Int16.random(in: 1...10) * 2
         assignXPosition(for: flower, in: managedObjectContext, isBigPlant: isBigPlant)
         
