@@ -18,10 +18,9 @@ struct MainView: View {
     
     let buttons = [
         ("Tasks", "planet-1"),
-        ("Calendar", "planet-2"),
+        ("Calendar", "planet-4"),
         ("Notes", "planet-3"),
-        ("Health", "planet-4"),
-        ("Overview", "planet-5")
+        ("Health", "planet-2"),
     ]
 
     var body: some View {
@@ -73,12 +72,28 @@ struct MainView: View {
     }
     
     private func navigationButton(label: String, imageName: String) -> some View {
-        NavigationLink(destination: destinationView(for: label)) {
+        var imageWidth: CGFloat = 100 // Default width
+        var imageHeight: CGFloat = 100 // Default height
+        
+        if label == "Tasks" {
+            imageWidth = 170 // Adjust width for "Tasks" label
+            imageHeight = 170 // Adjust height for "Tasks" label
+        } else if label == "Calendar" {
+            imageWidth = 130 // Adjust width for "Calendar" label
+            imageHeight = 130 // Adjust height for "Calendar" label
+        } else if label == "Notes" {
+            imageWidth = 130 // Adjust width for "Label3" label
+            imageHeight = 130 // Adjust height for "Label3" label
+        } else if label == "Health" {
+            imageWidth = 180 // Adjust width for "Label4" label
+            imageHeight = 150 // Adjust height for "Label4" label
+        }
+
+        return NavigationLink(destination: destinationView(for: label)) {
             ZStack {
                 Image(imageName)
                     .resizable()
-                    .scaledToFit()
-                    .frame(width: 100, height: 100)
+                    .frame(width: imageWidth, height: imageHeight) // Use the individual width and height for each label
                     .foregroundColor(.white)
                     .opacity(0.7)
                 Text(label)
@@ -90,7 +105,7 @@ struct MainView: View {
             .padding()
             .frame(maxWidth: .infinity)
             .background(Color("bg-color"))
-            .cornerRadius(10)
+            .cornerRadius(1)
         }
         .buttonStyle(PlainButtonStyle())
     }
@@ -108,8 +123,6 @@ struct MainView: View {
             return AnyView(NotesView())
         case "Health":
             return AnyView(HealthView())
-        case "Overview":
-            return AnyView(OverviewView())
         default:
             return AnyView(Text("Not Implemented"))
         }
