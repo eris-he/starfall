@@ -25,6 +25,10 @@ struct CalendarView: View {
         VStack{
             CalendarViewControllerWrapper()
         }
+        .toolbarBackground(.visible, for: .navigationBar)
+        .toolbarBackground(Color.indigo,
+                           // 2
+                           for: .navigationBar)
     }
 }
 

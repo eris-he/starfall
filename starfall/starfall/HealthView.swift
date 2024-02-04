@@ -1,5 +1,6 @@
 import SwiftUI
 import CoreData
+import UIKit
 
 struct HealthView: View {
     @State private var userInput: String = ""
@@ -12,79 +13,79 @@ struct HealthView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
 
-
-
     var body: some View {
-        ZStack {
-            Color("bg-color") // Background color
-            
-            VStack {
-                
-                Spacer()
-                
-                // PNG image with transparent background
-                ZStack {
-                    Image("sun") // Replace "your_image" with the name of your PNG image asset
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 150, height: 150)
-                        .padding()
-                        .cornerRadius(10)
-                        .shadow(color: .blue, radius: 10, x: 0, y: 0) // Add shadow effect
+        NavigationView {
+            ZStack {
+                Color("bg-color") // Background color
+                    .ignoresSafeArea()
+                VStack {
                     
-                }
-                
-                Text("How are you feeling today?")
-                    .font(.title)
-                    .foregroundColor(.white)
-                    .padding(.top, 10) // Move the text up by adding top padding
-
-                TextField("Enter here", text: $userInput)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-                
-                Text("How was your sleep?")
-                    .font(.title)
-                    .foregroundColor(.white)
-                    .padding(.top, 10) // Move the text up by adding top padding
-                
-                Picker(selection: $sleepRating, label: Text("Sleep Rating")) {
-                    ForEach(1..<11) { rating in
-                        Text("\(rating)")
-                            .foregroundColor(.black) // Set text color to black
+                    Spacer()
+                    
+                    // PNG image with transparent background
+                    ZStack {
+                        Image("sun") // Replace "your_image" with the name of your PNG image asset
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 150, height: 150)
+                            .padding()
+                            .cornerRadius(10)
+                            .shadow(color: .blue, radius: 10, x: 0, y: 0) // Add shadow effect
                     }
-                }
-                .pickerStyle(SegmentedPickerStyle()) // Use segmented picker style
-                .padding()
-                .foregroundColor(.white)
-                .background(Color.indigo)
-                .padding()
-                .disabled(userInput.isEmpty) // Disable button if user input is empty
-
-                if isSaved {
-                    Text("Data saved successfully")
+                    
+                    Text("How are you feeling today?")
+                        .font(.title)
                         .foregroundColor(.white)
+                        .padding(.top, 10) // Move the text up by adding top padding
+                    
+                    TextField("Enter here", text: $userInput)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding()
+                    
+                    Text("How was your sleep?")
+                        .font(.title)
+                        .foregroundColor(.white)
+                        .padding(.top, 10) // Move the text up by adding top padding
+                    
+                    Picker(selection: $sleepRating, label: Text("Sleep Rating")) {
+                        ForEach(1..<11) { rating in
+                            Text("\(rating)")
+                                .foregroundColor(.black) // Set text color to black
+                        }
+                    }
+                    .pickerStyle(SegmentedPickerStyle()) // Use segmented picker style
+                    .padding()
+                    .foregroundColor(.white)
+                    .background(Color.indigo)
+                    .padding()
+                    .disabled(userInput.isEmpty) // Disable button if user input is empty
+                    
+                    if isSaved {
+                        Text("Data saved successfully")
+                            .foregroundColor(.white)
+                            .padding()
+                    }
+                    Spacer()
                 }
-                Spacer()
+                .ignoresSafeArea()
             }
-            .ignoresSafeArea()
+            .edgesIgnoringSafeArea(.all)
+            .navigationBarItems(trailing: Button(action: {
+                // Update the note title with the temporary title before saving
+                saveToFile()
+            }) {
+                Text("Save")
+                    .foregroundColor(.white)
+                Image(systemName: "checkmark")
+                    .foregroundColor(.white) // Set the icon color to white
+            })
+            .toolbarBackground(.visible, for: .navigationBar)
+            .toolbarBackground(Color.indigo,
+                               // 2
+                               for: .navigationBar)
         }
-        .edgesIgnoringSafeArea(.all)
-        .navigationBarItems(trailing: Button(action: {
-            // Update the note title with the temporary title before saving
-            saveToFile()
-        }) {
-            Text("Save")
-                .foregroundColor(.white)
-            Image(systemName: "checkmark")
-                .foregroundColor(.white) // Set the icon color to white
-        })
-        .toolbarBackground(.visible, for: .navigationBar)
-        .toolbarBackground(Color.indigo,
-                           // 2
-                           for: .navigationBar)
     }
+    
     
     private func saveToFile() {
         guard !isSaved else {
