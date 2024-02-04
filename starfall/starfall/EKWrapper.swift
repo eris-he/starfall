@@ -62,7 +62,9 @@ public final class EKWrapper: EventDescriptor {
     }
 
     public func makeEditable() -> EKWrapper {
-        fatalError()
+            let cloned = Self(eventKitEvent: ekEvent)
+            cloned.editedEvent = self
+            return cloned
     }
 
     public func commitEditing() {
