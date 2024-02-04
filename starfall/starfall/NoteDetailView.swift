@@ -55,7 +55,11 @@ struct NoteEditView: View {
                     .padding(4)
                 }
             }
-            .navigationBarItems(trailing: Button(action: saveNote) {
+            .navigationBarItems(trailing: Button(action: {
+                // Update the note title with the temporary title before saving
+                note.noteTitle = tempTitle
+                saveNote()
+            }) {
                 Text("Save")
                 Image(systemName: "checkmark")
                     .foregroundColor(.white) // Set the icon color to white
@@ -65,7 +69,8 @@ struct NoteEditView: View {
                 // Initialize the temporary title with the current note title
                 self.tempTitle = note.noteTitle ?? ""
             }
-            .toolbarBackground(Color.black,
+            .toolbarBackground(.visible, for: .navigationBar)
+            .toolbarBackground(Color.indigo,
                                // 2
                                for: .navigationBar)
         }
