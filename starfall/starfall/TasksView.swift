@@ -26,45 +26,52 @@ struct TasksView: View {
             Color("bg-color").ignoresSafeArea()
             
             VStack {
-                Text("Tasks")
-                    .foregroundColor(.white)
-                    .font(.custom("Futura-Medium", size: 42))
+                Section {
+                    Text("Tasks")
+                        .foregroundColor(.white)
+                        .font(.custom("Futura-Medium", size: 42))
+                }
                 
                 // List of tasks
                 List {
                     ForEach(tasks) { task in
-                        SingleTaskView(task: task)
-                            .listRowBackground(Color("bg-color"))
+                        ZStack() {
+                            SingleTaskView(task: task)
+                                .background(Color("bg-color"))
+                        }
+                        .padding(.bottom, 13)
+                        .overlay(Rectangle().frame(height: 1).foregroundColor(.gray), alignment: .bottom)
+                        .listRowBackground(Color("bg-color"))
                     }
                     .onDelete(perform: deleteTask)
-                    .padding(0)
+                
                     
                     // This is the text field add button
                     HStack {
                         ZStack {
-                            
                             Color("textbox-color").cornerRadius(8)
                             
                             if newTaskContent.isEmpty {
-                                HStack{
+                                HStack {
                                     Text("New task")
                                         .foregroundColor(.gray)
-                                        .padding(.leading, 5)
+                                        .padding(.leading, 15) // Adjusted for uniform padding
                                     Spacer()
                                 }
                             }
                             
                             TextField("", text: $newTaskContent)
                                 .foregroundColor(.white)
-                                .padding(5)
+                                .padding(.horizontal, 15) // Adjust padding to match the placeholder text
+                                .padding(.vertical, 5) // Ensure vertical padding does not exceed ZStack's frame height
                         }
-                        .frame(height: 36)
-                        
                         Button(action: addTask) {
                             Image(systemName: "plus.circle.fill")
                                 .foregroundColor(.green)
                                 .padding(.horizontal, 4)
                         }
+                        .buttonStyle(PlainButtonStyle())
+
                     }
                     .background(Color("bg-color"))
                     .listRowBackground(Color("bg-color"))
@@ -204,14 +211,12 @@ struct SingleTaskView: View {
                         .foregroundColor(task.taskCheckbox ? .green : .gray)
                 }
                 .buttonStyle(BorderlessButtonStyle())
-                .padding(0)
 
                 // Collapsible Text with conditional styling
                 Text(task.taskContent ?? "")
                     .lineLimit(isExpanded ? nil : 1)
                     .foregroundColor(task.taskCheckbox ? .gray : .white) // Greyed out if completed
                     .strikethrough(task.taskCheckbox, color: .gray) // Strikethrough if completed
-                    .padding(0)
                     .onTapGesture {
                         // Expand or collapse text
                         withAnimation {
@@ -221,11 +226,7 @@ struct SingleTaskView: View {
                     
                 Spacer()
             }
-            Divider()
-                .background(Color("separator-color"))
-                .padding(0)
         }
-        
     }
     
     // Assuming a structure to manage the cache
@@ -283,8 +284,6 @@ struct SingleTaskView: View {
         }
     }
 }
-
-
 
 struct TasksView_Previews: PreviewProvider {
     static var previews: some View {
