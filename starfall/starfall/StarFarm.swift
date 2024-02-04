@@ -86,7 +86,10 @@ struct StarFarm: View {
             do {
                 let result = try self.viewContext.fetch(request)
                 if let mostRecentWeeklyStarFarm = result.first {
-                    self.stars = mostRecentWeeklyStarFarm.stars?.allObjects as? [Star] ?? []
+                    // Fetch all Stars and filter them for isVisible == true
+                    let allStars = mostRecentWeeklyStarFarm.stars?.allObjects as? [Star] ?? []
+                    self.stars = allStars.filter { $0.isVisible }
+                    // Assuming flowers don't need to be filtered similarly, but if needed, adjust accordingly
                     self.flowers = mostRecentWeeklyStarFarm.flowers?.allObjects as? [Flower] ?? []
                 }
             } catch {

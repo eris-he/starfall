@@ -138,9 +138,6 @@ struct SingleTaskView: View {
             HStack {
                 // Checkbox representation
                 Button(action: {
-                    // Toggle task completion status
-                    task.taskCheckbox.toggle()
-                    
                     // Save context function to avoid redundancy
                     func saveContext() {
                         do {
@@ -150,6 +147,10 @@ struct SingleTaskView: View {
                         }
                     }
 
+                    // Toggle task completion status
+                    task.taskCheckbox.toggle()
+                    saveContext()
+                    
                     if task.taskCheckbox {
                         task.taskCompletedTime = Date()
 
@@ -275,7 +276,7 @@ struct SingleTaskView: View {
         // Find an unoccupied position using the cache
         if let position = cache.findUnoccupiedPosition() {
             let adjustedX = position.x * starSize + starSize / 2
-            let adjustedY = position.y * starSize + starSize / 2 - 125
+            let adjustedY = position.y * starSize + starSize / 2 - 250
             star.x = Int16(adjustedX)
             star.y = Int16(adjustedY)
         } else {
