@@ -75,7 +75,7 @@ struct MainView: View {
                             .offset(x: -23, y: 10) // Nudge the image 10 points right and 20 points up
 
                             .rotationEffect(Angle(degrees: 35)) // Rotate the rocket image by 45 degrees
-                            .opacity(0.7)
+                            .opacity(0.88)
 
                         Text("Focus")
                             .foregroundColor(.white)
