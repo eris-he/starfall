@@ -65,15 +65,30 @@ struct NotesView: View {
                             if selectedFolder == folder {
                                 ForEach(folder.folderNotes?.allObjects as? [Note] ?? [], id: \.self) { note in
                                     NavigationLink(destination: NoteEditView(note: note)) {
-                                        Text(note.noteTitle ?? "Untitled")
-                                            .foregroundColor(.white)
+                                        HStack(alignment: .center) {
+                                            Image(systemName: "doc")
+                                                .foregroundColor(.white)
+                                            VStack(alignment: .leading) {
+                                                Text(note.noteTitle ?? "Untitled")
+                                                    .foregroundColor(.white)
+                                                    .lineLimit(1)
+                                                    .truncationMode(.tail)
+                                                if let noteBody = note.noteBody, !noteBody.isEmpty {
+                                                    Text(noteBody)
+                                                        .foregroundColor(.white)
+                                                        .font(.subheadline)
+                                                        .lineLimit(1)
+                                                        .truncationMode(.tail)
+                                                }
+                                            }
+                                            .background(Color("bg-color"))
+                                        }
+                                        .padding(.leading, 40)
                                     }
                                     .listRowBackground(Color("bg-color"))
                                 }
                             }
                         }
-//                        Divider()
-//                            .background(Color("bg-color"))
                     }
                     Section() {
                         ForEach(notes.filter { $0.noteFolder == nil }, id: \.self) { note in
@@ -84,7 +99,6 @@ struct NotesView: View {
                                     VStack(alignment: .leading) {
                                         Text(note.noteTitle ?? "Untitled")
                                             .foregroundColor(.white)
-                                            .font(.headline)
                                             .lineLimit(1)
                                             .truncationMode(.tail)
                                         if let noteBody = note.noteBody, !noteBody.isEmpty {
@@ -153,7 +167,6 @@ struct NotesView: View {
         
         // Trigger the navigation to the NoteEditView
         isAddingNewNote = true
-        print("test")
     }
 
     private func deleteNotes(offsets: IndexSet) {

@@ -20,51 +20,49 @@ struct NoteEditView: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                VStack {
+                VStack(){
                     HStack {
-                        if let folderName = note.noteFolder?.folderName {
-                            HStack {
-                                Image(systemName: "folder") // Folder icon
-                                    .foregroundColor(.yellow) // Folder icon color
-                                Text(folderName)
-                                    .foregroundColor(.white)
-                                    .font(.headline)
-                            }
-                            .padding() // Add some padding around the folder name
-                        }
+                        Image(systemName: "folder") // System folder icon
+                            .foregroundColor(.yellow) // Color the icon
+                        Text("Current Folder: ") // Add this line
+                            .foregroundColor(.white)
+                        
                         Picker("Folder", selection: $selectedFolderID) {
                             Text("No Folder").tag(NSManagedObjectID?.none)
                             ForEach(folders, id: \.self) { folder in
                                 Text(folder.folderName ?? "Unnamed Folder").tag(folder.objectID as NSManagedObjectID?)
-                                    .font(.headline)
+                                    .font(.custom("Futura-Medium", size: 12))
                             }
                         }
                         .pickerStyle(MenuPickerStyle())
                     }
-                    DatePicker(
-                        "Date",
-                        selection: Binding<Date>.safeUnwrap($note.noteDate, defaultValue: Date()),
-                        displayedComponents: .date
-                    )
-                    .colorScheme(.dark)
-                    .padding()
-                    .background(Color("bg-color")) // Set the background color of DatePicker
-                    .padding(.horizontal)
-                    
-
-                    ZStack {
-                        Color("bg-color")
-                            .ignoresSafeArea()
-                        TextEditor(text: Binding<String>.safeUnwrap($note.noteBody, defaultValue: ""))
-                            .foregroundColor(.white) // Set the text color to white
-                            .frame(minHeight: 300) // Set minimum height or use geometry reader for dynamic height
-                            .padding(.horizontal)
-                            .scrollContentBackground(.hidden) // to make background color work
-                            .background(Color("bg-color"))
-                            .font(.custom("Futara-Medium", size: 20))
+                    HStack {
+                        Text("Date:")
+                            .foregroundColor(.white)
+                        DatePicker(
+                            "",
+                            selection: Binding<Date>.safeUnwrap($note.noteDate, defaultValue: Date()),
+                            displayedComponents: .date
+                        )
+                        .colorScheme(.dark)
+                        .labelsHidden() // Hide the default label of the DatePicker
                     }
                 }
-                .background(Color("bg-color")) // Set the background color of VStack
+                Divider()
+                    .background(Color.white)
+                    .padding(.horizontal)
+
+                ZStack {
+                    Color("bg-color")
+                        .ignoresSafeArea()
+                    TextEditor(text: Binding<String>.safeUnwrap($note.noteBody, defaultValue: ""))
+                        .foregroundColor(.white) // Set the text color to white
+                        .frame(minHeight: 300) // Set minimum height or use geometry reader for dynamic height
+                        .padding(.horizontal)
+                        .scrollContentBackground(.hidden) // to make background color work
+                        .background(Color("bg-color"))
+                        .font(.custom("Futura-Medium", size: 20))
+                }
             }
             .background(Color("bg-color")) // Set the background color of ScrollView
             // Replace navigationTitle with a custom view that contains a TextField

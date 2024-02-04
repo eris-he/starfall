@@ -23,10 +23,12 @@
 		0F33BFBF2B6ED68900E41DB2 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F33BFBE2B6ED68900E41DB2 /* CalendarView.swift */; };
 		0FC340B52B6EDC7C0071E1F4 /* OverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC340B42B6EDC7C0071E1F4 /* OverviewView.swift */; };
 		0FC340B72B6EF1A80071E1F4 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0FC340B62B6EF1A80071E1F4 /* Media.xcassets */; };
+		7ED388A62B6F883600636122 /* EKWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED388A52B6F883600636122 /* EKWrapper.swift */; };
 		0FC340BB2B6F6AFE0071E1F4 /* StarFarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC340BA2B6F6AFE0071E1F4 /* StarFarm.swift */; };
 		0FC340BD2B6F760D0071E1F4 /* StarFarmProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC340BC2B6F760D0071E1F4 /* StarFarmProcessing.swift */; };
 		0FC340BF2B6F95A40071E1F4 /* InMemoryCoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC340BE2B6F95A40071E1F4 /* InMemoryCoreDataStack.swift */; };
 		0FC340C12B6F95EA0071E1F4 /* starfall_test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC340C02B6F95EA0071E1F4 /* starfall_test.swift */; };
+		7ED388A82B6F938F00636122 /* EKWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED388A72B6F938F00636122 /* EKWrapper.swift */; };
 		7EEC2B482B6F1F8F0024825F /* CalendarKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7EEC2B472B6F1F8F0024825F /* CalendarKit */; };
 		7EEC2B4C2B6F24B70024825F /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEC2B4B2B6F24B70024825F /* CalendarViewController.swift */; };
 		9FF1AB5F2B6EE90C00DE23DA /* NoteDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF1AB5E2B6EE90C00DE23DA /* NoteDetailView.swift */; };
@@ -73,7 +75,11 @@
 		0FC340BC2B6F760D0071E1F4 /* StarFarmProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarFarmProcessing.swift; sourceTree = "<group>"; };
 		0FC340BE2B6F95A40071E1F4 /* InMemoryCoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMemoryCoreDataStack.swift; sourceTree = "<group>"; };
 		0FC340C02B6F95EA0071E1F4 /* starfall_test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = starfall_test.swift; sourceTree = "<group>"; };
+		7ED388A52B6F883600636122 /* EKWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EKWrapper.swift; sourceTree = "<group>"; };
+		0FC340BA2B6F6AFE0071E1F4 /* StarFarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarFarm.swift; sourceTree = "<group>"; };
+		0FC340BC2B6F760D0071E1F4 /* StarFarmProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarFarmProcessing.swift; sourceTree = "<group>"; };
 		7ED388A42B6F7FAE00636122 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		7ED388A72B6F938F00636122 /* EKWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EKWrapper.swift; sourceTree = "<group>"; };
 		7EEC2B4B2B6F24B70024825F /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		9FF1AB5E2B6EE90C00DE23DA /* NoteDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -107,6 +113,7 @@
 		0F33BF7B2B6ECD2100E41DB2 = {
 			isa = PBXGroup;
 			children = (
+				7ED388A72B6F938F00636122 /* EKWrapper.swift */,
 				0F33BF862B6ECD2100E41DB2 /* starfall */,
 				0F33BF9C2B6ECD2400E41DB2 /* starfallTests */,
 				0F33BFA62B6ECD2400E41DB2 /* starfallUITests */,
@@ -135,6 +142,7 @@
 				0FC340B42B6EDC7C0071E1F4 /* OverviewView.swift */,
 				0F33BFBE2B6ED68900E41DB2 /* CalendarView.swift */,
 				7EEC2B4B2B6F24B70024825F /* CalendarViewController.swift */,
+				7ED388A52B6F883600636122 /* EKWrapper.swift */,
 				0F33BFBC2B6ED67E00E41DB2 /* HealthView.swift */,
 				0F33BFBA2B6ED65A00E41DB2 /* NotesView.swift */,
 				0F33BFB82B6ED63C00E41DB2 /* FocusView.swift */,
@@ -317,11 +325,13 @@
 				0F33BFBB2B6ED65A00E41DB2 /* NotesView.swift in Sources */,
 				0FC340BB2B6F6AFE0071E1F4 /* StarFarm.swift in Sources */,
 				0F33BF912B6ECD2400E41DB2 /* Persistence.swift in Sources */,
+				7ED388A62B6F883600636122 /* EKWrapper.swift in Sources */,
 				0F33BF8A2B6ECD2100E41DB2 /* MainView.swift in Sources */,
 				0FC340B52B6EDC7C0071E1F4 /* OverviewView.swift in Sources */,
 				0FC340BD2B6F760D0071E1F4 /* StarFarmProcessing.swift in Sources */,
 				0F33BF942B6ECD2400E41DB2 /* starfall.xcdatamodeld in Sources */,
 				0F33BFBD2B6ED67E00E41DB2 /* HealthView.swift in Sources */,
+				7ED388A82B6F938F00636122 /* EKWrapper.swift in Sources */,
 				0F33BFBF2B6ED68900E41DB2 /* CalendarView.swift in Sources */,
 				9FF1AB5F2B6EE90C00DE23DA /* NoteDetailView.swift in Sources */,
 				0F33BF882B6ECD2100E41DB2 /* starfallApp.swift in Sources */,
