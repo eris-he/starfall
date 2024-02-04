@@ -1,9 +1,16 @@
 import SwiftUI
+import CoreData
 
 struct HealthView: View {
     @State private var userInput: String = ""
     @State private var sleepRating: Int = 5
     @State private var isSaved: Bool = false
+    
+    @StateObject private var notesViewModel = NotesViewModel() // Instantiate the ViewModel
+    
+    @Environment(\.managedObjectContext) private var viewContext
+
+
 
     var body: some View {
         ZStack {
@@ -74,28 +81,50 @@ struct HealthView: View {
     
     private func saveToFile() {
         guard !isSaved else {
-            print("File already saved")
+            print("Note already saved")
             return
         }
-        
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyyMMdd-HHmmss" // Define the date format
+        let healthFolder = findOrCreateFolder(named: "Health Notes")
 
-        let fileName = "Health-\(formatter.string(from: Date())).txt"
-        let fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(fileName)
+        let newNote = Note(context: viewContext) // Use the same viewContext that is injected into the environment
+        newNote.noteTitle = "Health Note"
+        newNote.noteBody = "Mood: \(userInput)\nSleep Rating: \(sleepRating)"
+        newNote.noteDate = Date()
+        newNote.noteFolder = healthFolder // Assign the note to the "Health Notes" folder
 
         do {
-            let data = "\(userInput)\nSleep Rating: \(sleepRating)"
-            try data.write(to: fileURL, atomically: true, encoding: .utf8)
-            print("Data saved to file: \(fileURL)")
+            try viewContext.save()
+            print("Note saved to CoreData")
             isSaved = true
-
-            // Reset isSaved after a delay
-            Timer.scheduledTimer(withTimeInterval: 6.0, repeats: false) { timer in
-                isSaved = false
+        } catch {
+            print("Error saving note to CoreData: \(error)")
+        }
+    }
+    
+    private func findOrCreateFolder(named folderName: String) -> Folder {
+        // Check if the folder already exists
+        let fetchRequest: NSFetchRequest<Folder> = Folder.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "folderName == %@", folderName)
+        
+        do {
+            let results = try viewContext.fetch(fetchRequest)
+            if let existingFolder = results.first {
+                // If the folder exists, return it
+                return existingFolder
+            } else {
+                // If the folder does not exist, create a new one
+                let newFolder = Folder(context: viewContext)
+                newFolder.folderName = folderName
+                newFolder.creationDate = Date()
+                return newFolder
             }
         } catch {
-            print("Error saving data to file: \(error)")
+            print("Error fetching folder: \(error)")
+            // If an error occurs, create a new folder to ensure the function returns a Folder object
+            let newFolder = Folder(context: viewContext)
+            newFolder.folderName = folderName
+            newFolder.creationDate = Date()
+            return newFolder
         }
     }
 }
