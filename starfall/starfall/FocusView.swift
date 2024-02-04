@@ -62,6 +62,7 @@ struct FocusView: View {
                 }
                 
                 Spacer()
+                
             }
         }
     }
@@ -74,68 +75,144 @@ struct CircularTimerView: View {
     @Binding var selectedTime: Int
     @Binding var timerIsActive: Bool
     private let feedbackGenerator = UIImpactFeedbackGenerator(style: .light)
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect() // Timer to tick every minute
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect() // Timer to tick every second
     var managedObjectContext: NSManagedObjectContext
     
     var body: some View {
-        ZStack {
-            Circle()
-                .stroke(lineWidth: 20)
-                .foregroundColor(Color.gray.opacity(0.2))
-            
-            Circle()
-                .trim(from: 0, to: CGFloat(selectedTime) / CGFloat(maxTime))
-                .stroke(style: StrokeStyle(lineWidth: 20, lineCap: .round))
-                .foregroundColor(Color.blue)
-                .rotationEffect(Angle(degrees: -90))
-                .animation(.linear, value: selectedTime)
-            
-            Text(timeFormatted(selectedTime))
-                .font(.custom("Futura-Medium", size: 32))
-                .foregroundColor(.white)
-            
-        }
-        .frame(width: 300, height: 300)
-        .onReceive(timer) { _ in
-            guard timerIsActive, selectedTime > 0 else {
-                if selectedTime == 0 {
-                    onComplete()
-                }
-                return
+        VStack {
+            ZStack {
+                Circle()
+                    .stroke(lineWidth: 20)
+                    .foregroundColor(Color.gray.opacity(0.2))
+                
+                Circle()
+                    .trim(from: 0, to: CGFloat(selectedTime) / CGFloat(maxTime))
+                    .stroke(style: StrokeStyle(lineWidth: 20, lineCap: .round))
+                    .foregroundColor(Color.blue)
+                    .rotationEffect(Angle(degrees: -90))
+                    .animation(.linear, value: selectedTime)
+                
+                Text(timeFormatted(selectedTime))
+                    .font(.custom("Futura-Medium", size: 32))
+                    .foregroundColor(.white)
+                
             }
-            selectedTime -= 1
+            .frame(width: 300, height: 300)
+            .onReceive(timer) { _ in
+                guard timerIsActive, selectedTime > 0 else {
+                    if selectedTime == 0 {
+                        onComplete()
+                    }
+                    return
+                }
+                selectedTime -= 1
+            }
+            .gesture(
+                timerIsActive ? nil :
+                DragGesture(minimumDistance: 0)
+                    .onChanged({ value in
+                        self.selectedTime = timeForGesture(value: value)
+                    })
+            )
+            
+            //==================== TESTING BLOCK FOR TESTING ONLY ====================
+            Group {
+                Button("Add 15 Minute Timer") {
+                    testComplete(focusMinutes: 15)
+                }
+                .padding()
+                .background(Color.orange)
+                .cornerRadius(8)
+                
+                Button("Add 45 Minute Timer") {
+                    testComplete(focusMinutes: 45)
+                }
+                .padding()
+                .background(Color.purple)
+                .cornerRadius(8)
+                
+                Button("Add 90 Minute Timer") {
+                    testComplete(focusMinutes: 90)
+                }
+                .padding()
+                .background(Color.blue)
+                .cornerRadius(8)
+                
+                Button("Add 120 Minute Timer") {
+                    testComplete(focusMinutes: 120)
+                }
+                .padding()
+                .background(Color.green)
+                .cornerRadius(8)
+            }
+            .foregroundColor(.white)
+            .font(.custom("Futura-Medium", size: 18))
+            
+            //==================== TESTING BLOCK FOR TESTING ONLY ====================
+            // EXTRACT FROM VSTACK WHEN DONE TESTING
+
         }
-        .gesture(
-            timerIsActive ? nil :
-            DragGesture(minimumDistance: 0)
-                .onChanged({ value in
-                    self.selectedTime = timeForGesture(value: value)
-                })
-        )
+
     }
+    
+    
+    //==================== TESTING BLOCK FOR TESTING ONLY ====================
+
+    func testComplete(focusMinutes: Int) {
+        let focusTimer = FocusTimer(context: managedObjectContext)
+        focusTimer.timeCompleted = Date()
+        focusTimer.timeFocused = Int16(focusMinutes) // Directly set in minutes
+        
+        let weeklyStarFarm = fetchOrCreateWeeklyStarFarm()
+        let flower = Flower(context: managedObjectContext)
+        flower.isVisible = false
+        
+        // Determine if the plant is big based on the focus duration
+        let isBigPlant = focusMinutes > 90 // More than 90 minutes for a big plant
+        flower.plant_no = isBigPlant ? Int16.random(in: 1...10) * 2 - 1 : Int16.random(in: 1...10) * 2
+        assignXPosition(for: flower, in: managedObjectContext, isBigPlant: isBigPlant)
+        
+        // Link the FocusTimer and Flower
+        focusTimer.flower = flower
+        weeklyStarFarm.addToFlowers(flower)
+        
+        do {
+            try managedObjectContext.save()
+        } catch {
+            print("Failed to save FocusTimer and Flower: \(error)")
+        }
+    }
+
+    //==================== TESTING BLOCK FOR TESTING ONLY ====================
+    
     
     func onComplete() {
         let focusTimer = FocusTimer(context: managedObjectContext)
         focusTimer.timeCompleted = Date()
         focusTimer.timeFocused = Int16(selectedTime) / 60 // Convert seconds to minutes
         
+        let weeklyStarFarm = fetchOrCreateWeeklyStarFarm()
         let flower = Flower(context: managedObjectContext)
         flower.isVisible = false
         // Assign `plant_no` and `x` as needed
         // For simplicity, let's assume sequential planting and a fixed `x` position
         let isBigPlant = (focusTimer.timeFocused > 90) // More than 90 minutes for a big plant
-        if isBigPlant {
-            // Choose an odd number between 1 and 20 for big plants
-            flower.plant_no = Int16.random(in: 1...10) * 2 - 1
-        } else {
-            // Choose an even number between 1 and 20 for small plants
-            flower.plant_no = Int16.random(in: 1...10) * 2
-        }
+//        if isBigPlant {
+//            // Choose an odd number between 1 and 20 for big plants
+//            flower.plant_no = Int16.random(in: 1...10) * 2 - 1
+//        } else {
+//            // Choose an even number between 1 and 20 for small plants
+//            flower.plant_no = Int16.random(in: 1...10) * 2
+//        }
+//        
+//        assignXPosition(for: flower, in: managedObjectContext, isBigPlant: isBigPlant)
         
+        flower.plant_no = isBigPlant ? Int16.random(in: 1...10) * 2 - 1 : Int16.random(in: 1...10) * 2
         assignXPosition(for: flower, in: managedObjectContext, isBigPlant: isBigPlant)
 
         // Link the FocusTimer and Flower
         focusTimer.flower = flower
+        weeklyStarFarm.addToFlowers(flower) // Assuming a relationship exists
         
         do {
             try managedObjectContext.save()
@@ -148,7 +225,7 @@ struct CircularTimerView: View {
         let fetchRequest: NSFetchRequest<Flower> = Flower.fetchRequest()
         // If big plants can overlap any, but small cannot overlap another small, consider fetching only small plants if the current one is small.
         if !isBigPlant {
-            fetchRequest.predicate = NSPredicate(format: "plant_no %% 2 == 0") // Fetch only small plants
+            fetchRequest.predicate = NSPredicate(format: "plant_no % 2 == 0") // Fetch only small plants
         }
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "x", ascending: true)]
         
@@ -207,6 +284,40 @@ struct CircularTimerView: View {
         } else {
             return String(format: "%02d:%02d", minutes, seconds)
         }
+    }
+}
+
+extension Date {
+    func startOfWeek(using calendar: Calendar = .current) -> Date? {
+        let components = calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self)
+        return calendar.date(from: components)
+    }
+}
+
+extension CircularTimerView {
+    func fetchOrCreateWeeklyStarFarm() -> WeeklyStarFarm {
+        let context = managedObjectContext
+        let calendar = Calendar.current
+        let now = Date()
+        guard let mostRecentSunday = now.startOfWeek(using: calendar) else { fatalError("Could not find the start of the week") }
+        
+        let request: NSFetchRequest<WeeklyStarFarm> = WeeklyStarFarm.fetchRequest()
+        request.predicate = NSPredicate(format: "week == %@", mostRecentSunday as NSDate)
+        request.fetchLimit = 1
+
+        do {
+            let results = try context.fetch(request)
+            if let existingFarm = results.first {
+                return existingFarm
+            }
+        } catch {
+            print("Error fetching WeeklyStarFarm: \(error)")
+        }
+
+        // If there's no WeeklyStarFarm for the most recent Sunday, create a new one
+        let newFarm = WeeklyStarFarm(context: context)
+        newFarm.week = mostRecentSunday
+        return newFarm
     }
 }
 

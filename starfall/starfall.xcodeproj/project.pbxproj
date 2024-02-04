@@ -25,6 +25,8 @@
 		0FC340B72B6EF1A80071E1F4 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0FC340B62B6EF1A80071E1F4 /* Media.xcassets */; };
 		0FC340BB2B6F6AFE0071E1F4 /* StarFarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC340BA2B6F6AFE0071E1F4 /* StarFarm.swift */; };
 		0FC340BD2B6F760D0071E1F4 /* StarFarmProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC340BC2B6F760D0071E1F4 /* StarFarmProcessing.swift */; };
+		0FC340BF2B6F95A40071E1F4 /* InMemoryCoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC340BE2B6F95A40071E1F4 /* InMemoryCoreDataStack.swift */; };
+		0FC340C12B6F95EA0071E1F4 /* starfall_test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC340C02B6F95EA0071E1F4 /* starfall_test.swift */; };
 		7EEC2B482B6F1F8F0024825F /* CalendarKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7EEC2B472B6F1F8F0024825F /* CalendarKit */; };
 		7EEC2B4C2B6F24B70024825F /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEC2B4B2B6F24B70024825F /* CalendarViewController.swift */; };
 		9FF1AB5F2B6EE90C00DE23DA /* NoteDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF1AB5E2B6EE90C00DE23DA /* NoteDetailView.swift */; };
@@ -67,9 +69,11 @@
 		0F33BFBE2B6ED68900E41DB2 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		0FC340B42B6EDC7C0071E1F4 /* OverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewView.swift; sourceTree = "<group>"; };
 		0FC340B62B6EF1A80071E1F4 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
-		7ED388A42B6F7FAE00636122 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		0FC340BA2B6F6AFE0071E1F4 /* StarFarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarFarm.swift; sourceTree = "<group>"; };
 		0FC340BC2B6F760D0071E1F4 /* StarFarmProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarFarmProcessing.swift; sourceTree = "<group>"; };
+		0FC340BE2B6F95A40071E1F4 /* InMemoryCoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMemoryCoreDataStack.swift; sourceTree = "<group>"; };
+		0FC340C02B6F95EA0071E1F4 /* starfall_test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = starfall_test.swift; sourceTree = "<group>"; };
+		7ED388A42B6F7FAE00636122 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		7EEC2B4B2B6F24B70024825F /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		9FF1AB5E2B6EE90C00DE23DA /* NoteDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -157,6 +161,8 @@
 			isa = PBXGroup;
 			children = (
 				0F33BF9D2B6ECD2400E41DB2 /* starfallTests.swift */,
+				0FC340BE2B6F95A40071E1F4 /* InMemoryCoreDataStack.swift */,
+				0FC340C02B6F95EA0071E1F4 /* starfall_test.swift */,
 			);
 			path = starfallTests;
 			sourceTree = "<group>";
@@ -329,6 +335,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F33BF9E2B6ECD2400E41DB2 /* starfallTests.swift in Sources */,
+				0FC340C12B6F95EA0071E1F4 /* starfall_test.swift in Sources */,
+				0FC340BF2B6F95A40071E1F4 /* InMemoryCoreDataStack.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

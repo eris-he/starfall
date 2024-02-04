@@ -35,9 +35,9 @@ struct MainView: View {
                     starGarden()
                         .frame(maxWidth: .infinity, maxHeight: 300)
                     
-                    Divider()
-                        .background(Color.white)
-                        .padding(.horizontal)
+//                    Divider()
+//                        .background(Color.white)
+//                        .padding(.horizontal)
                     
                     // Grid layout for the rest of the buttons
                     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
