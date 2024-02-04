@@ -23,8 +23,12 @@ struct NotesView: View {
                         VStack(alignment: .leading) {
                             Text(note.noteTitle ?? "Untitled")
                                 .font(.headline)
+                                .lineLimit(1) // Ensures the title is only one line
+                                .truncationMode(.tail) // Truncates at the end if needed
                             Text(note.noteBody ?? "No content")
                                 .font(.subheadline)
+                                .lineLimit(1) // Ensures the body is only one line
+                                .truncationMode(.tail) // Truncates at the end if needed
                             // If you want to show the date as well, you can add it here.
                         }
                     }
