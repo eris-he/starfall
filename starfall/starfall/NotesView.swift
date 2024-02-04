@@ -48,6 +48,7 @@ struct NotesView: View {
         
         // Trigger the navigation to the NoteEditView
         isAddingNewNote = true
+        print("test")
     }
 
     private func deleteNotes(offsets: IndexSet) {

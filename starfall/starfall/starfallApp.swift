@@ -14,6 +14,7 @@ struct starfallApp: App {
     var body: some Scene {
         WindowGroup {
             MainView()
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 .environment(\.font, Font.custom("Futura-Medium", size: 14))
         }
     }
