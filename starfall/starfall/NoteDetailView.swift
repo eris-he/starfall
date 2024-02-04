@@ -5,21 +5,33 @@ struct NoteEditView: View {
     @Environment(\.managedObjectContext) var viewContext
 
     var body: some View {
-        Form {
-            TextField("Title", text: Binding<Any>.safeUnwrap($note.noteTitle, defaultValue: ""))
-            TextField("Body", text: Binding<Any>.safeUnwrap($note.noteBody, defaultValue: ""))
-            DatePicker(
-                "Date",
-                selection: Binding<Any>.safeUnwrap($note.noteDate, defaultValue: Date()),
-                displayedComponents: .date
-            )
-            Button("Save") {
-                saveNote()
+            NavigationView {
+                ScrollView {
+                    VStack {
+                        TextField("Title", text: Binding<Any>.safeUnwrap($note.noteTitle, defaultValue: ""))
+                            .padding(.horizontal)
+                        
+                        DatePicker(
+                            "Date",
+                            selection: Binding<Any>.safeUnwrap($note.noteDate, defaultValue: Date()),
+                            displayedComponents: .date
+                        )
+                        .padding(.horizontal)
+
+                        TextEditor(text: Binding<Any>.safeUnwrap($note.noteBody, defaultValue: ""))
+                            .frame(minHeight: 300) // Set minimum height or use geometry reader for dynamic height
+                            .padding(.horizontal)
+                    }
+                }
+                .navigationTitle(Binding<Any>.safeUnwrap($note.noteTitle, defaultValue: "New Note").wrappedValue)
+                .navigationBarItems(trailing: Button(action: saveNote) {
+                    Button(action: saveNote) {
+                        Text("Save")
+                    }
+                    Image(systemName: "checkmark")
+                })
             }
-            .buttonStyle(PressedButtonStyle())
         }
-        .navigationTitle("Edit Note")
-    }
     
     private func saveNote() {
         do {
