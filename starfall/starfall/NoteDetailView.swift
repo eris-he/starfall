@@ -19,7 +19,7 @@ struct NoteEditView: View {
                         selection: Binding<Date>.safeUnwrap($note.noteDate, defaultValue: Date()),
                         displayedComponents: .date
                     )
-                    .foregroundColor(.white) // This sets the label color to white
+                    .colorScheme(.dark)
                     .padding()
                     .background(Color("bg-color")) // Set the background color of DatePicker
                     .padding(.horizontal)
