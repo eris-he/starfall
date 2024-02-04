@@ -7,6 +7,8 @@ struct HealthView: View {
     @State private var isSaved: Bool = false
     
     @StateObject private var notesViewModel = NotesViewModel() // Instantiate the ViewModel
+    @Environment(\.presentationMode) var presentationMode // Add this line
+
     
     @Environment(\.managedObjectContext) private var viewContext
 
@@ -25,7 +27,7 @@ struct HealthView: View {
                     Image("sun") // Replace "your_image" with the name of your PNG image asset
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 360, height: 360)
+                        .frame(width: 150, height: 150)
                         .padding()
                         .cornerRadius(10)
                         .shadow(color: .blue, radius: 10, x: 0, y: 0) // Add shadow effect
@@ -56,15 +58,6 @@ struct HealthView: View {
                 .padding()
                 .foregroundColor(.white)
                 .background(Color.indigo)
-                Button(action: {
-                    saveToFile()
-                }) {
-                    Text("Save")
-                        .foregroundColor(.white)
-                        .padding()
-                        .background(Color.indigo)
-                        .cornerRadius(10)
-                }
                 .padding()
                 .disabled(userInput.isEmpty) // Disable button if user input is empty
 
@@ -75,8 +68,22 @@ struct HealthView: View {
                 }
                 Spacer()
             }
+            .ignoresSafeArea()
         }
         .edgesIgnoringSafeArea(.all)
+        .navigationBarItems(trailing: Button(action: {
+            // Update the note title with the temporary title before saving
+            saveToFile()
+        }) {
+            Text("Save")
+                .foregroundColor(.white)
+            Image(systemName: "checkmark")
+                .foregroundColor(.white) // Set the icon color to white
+        })
+        .toolbarBackground(.visible, for: .navigationBar)
+        .toolbarBackground(Color.indigo,
+                           // 2
+                           for: .navigationBar)
     }
     
     private func saveToFile() {
@@ -96,6 +103,7 @@ struct HealthView: View {
             try viewContext.save()
             print("Note saved to CoreData")
             isSaved = true
+            self.presentationMode.wrappedValue.dismiss()
         } catch {
             print("Error saving note to CoreData: \(error)")
         }

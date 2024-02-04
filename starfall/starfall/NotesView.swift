@@ -87,6 +87,7 @@ struct NotesView: View {
                                     }
                                     .listRowBackground(Color("bg-color"))
                                 }
+                                .onDelete(perform: deleteNotes)
                             }
                         }
                     }
