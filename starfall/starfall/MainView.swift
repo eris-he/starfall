@@ -29,7 +29,7 @@ struct MainView: View {
                 Color("bg-color")
                     .ignoresSafeArea()
 
-                VStack(spacing: 20) {
+                VStack(spacing: 10) {
                     // Star garden area with the separate "Focus" button
                     starGarden()
                         .frame(maxWidth: .infinity, maxHeight: 300)
@@ -39,12 +39,15 @@ struct MainView: View {
 //                        .padding(.horizontal)
                     
                     // Grid layout for the rest of the buttons
-                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
+                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 0) {
                         ForEach(buttons, id: \.0) { button in
                             navigationButton(label: button.0, imageName: button.1)
                         }
                     }
                     .padding(.horizontal)
+                    .ignoresSafeArea(.container, edges: .bottom)
+                    .padding(.top, 5)
+
                 }
             }
         }
@@ -102,10 +105,13 @@ struct MainView: View {
                     .bold()
                     .font(.custom("Futura-Medium", size: 24))
             }
-            .padding()
+//            .padding()
+//            .ignoresSafeArea(.container, edges: .bottom)
             .frame(maxWidth: .infinity)
             .background(Color("bg-color"))
             .cornerRadius(1)
+
+
         }
         .buttonStyle(PlainButtonStyle())
     }
