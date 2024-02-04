@@ -224,15 +224,16 @@ struct CircularTimerView: View {
     func assignXPosition(for flower: Flower, in context: NSManagedObjectContext, isBigPlant: Bool, canvasWidth: Int = 300) {
         let fetchRequest: NSFetchRequest<Flower> = Flower.fetchRequest()
         // If big plants can overlap any, but small cannot overlap another small, consider fetching only small plants if the current one is small.
-        if !isBigPlant {
-            fetchRequest.predicate = NSPredicate(format: "plant_no % 2 == 0") // Fetch only small plants
-        }
+//        if !isBigPlant {
+//            fetchRequest.predicate = NSPredicate(format: "plant_no % 2 == 0") // Fetch only small plants
+//        }
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "x", ascending: true)]
         
         do {
             let existingFlowers = try context.fetch(fetchRequest)
-            let existingXPositions = existingFlowers.map { Int($0.x) }
-            
+            let filteredFlowers = isBigPlant ? existingFlowers : existingFlowers.filter { Int($0.plant_no) % 2 == 0 }
+            let existingXPositions = filteredFlowers.map { Int($0.x) }
+
             // Define spacing and size based on plant types for collision detection
             let plantSize = isBigPlant ? 50 : 30 // Assuming size represents potential collision space
             
