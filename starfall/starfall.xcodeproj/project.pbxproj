@@ -67,12 +67,9 @@
 		0F33BFBE2B6ED68900E41DB2 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		0FC340B42B6EDC7C0071E1F4 /* OverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewView.swift; sourceTree = "<group>"; };
 		0FC340B62B6EF1A80071E1F4 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
-<<<<<<< Updated upstream
 		7ED388A42B6F7FAE00636122 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-=======
 		0FC340BA2B6F6AFE0071E1F4 /* StarFarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarFarm.swift; sourceTree = "<group>"; };
 		0FC340BC2B6F760D0071E1F4 /* StarFarmProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarFarmProcessing.swift; sourceTree = "<group>"; };
->>>>>>> Stashed changes
 		7EEC2B4B2B6F24B70024825F /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		9FF1AB5E2B6EE90C00DE23DA /* NoteDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
