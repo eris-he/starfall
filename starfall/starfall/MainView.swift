@@ -55,6 +55,7 @@ struct MainView: View {
 
             }
         }
+        .accentColor(.white)
     }
     
     @ViewBuilder
