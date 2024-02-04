@@ -33,6 +33,7 @@ struct MainView: View {
                     // Star garden area with the separate "Focus" button
                     starGarden()
                         .frame(maxWidth: .infinity, maxHeight: 300)
+                        .zIndex(1)
                     
 //                    Divider()
 //                        .background(Color.white)
@@ -49,6 +50,8 @@ struct MainView: View {
                     .padding(.top, 5)
 
                 }
+                .zIndex(0) // This will bring the rocket image to the front
+
             }
         }
     }
@@ -59,17 +62,32 @@ struct MainView: View {
 
             StarFarm()
 
-            VStack{
-                Spacer() 
+            VStack {
+                Spacer()
                 NavigationLink(destination: FocusView()) {
-                    Text("Focus")
-                        .foregroundColor(.white)
-                        .padding()
-                        .background(Color.blue) // Customize the background color
-                        .cornerRadius(10)
-                        .font(.custom("Futura-Medium", size: 24))
+                    ZStack {
+                        Image("rocket") // Your rocket image from the assets
+                            .resizable()
+                            .scaledToFit() // This will ensure the image scales properly within the frame
+                            .frame(width: 650, height: 370) // Adjust the size as needed
+//                            .background(Color.blue) // Set the background color
+                            .cornerRadius(30) // Set the corner radius
+                            .offset(x: -23, y: 10) // Nudge the image 10 points right and 20 points up
+
+                            .rotationEffect(Angle(degrees: 35)) // Rotate the rocket image by 45 degrees
+                            .opacity(0.7)
+
+                        Text("Focus")
+                            .foregroundColor(.white)
+                            .shadow(color: .black, radius: 3)
+                            .bold()
+                            .font(.custom("Futura-Medium", size: 24))
+                    }
+                    .zIndex(1) // This will bring the rocket image to the front
+
                 }
-                .buttonStyle(PlainButtonStyle()) // Use PlainButtonStyle to prevent button highlighting effect
+//                .buttonStyle(PlainButtonStyle()) // Use PlainButtonStyle to prevent button highlighting effect
+                .frame(width: 100, height: 100) // Match this frame to the size of the image if needed
             }
         }
     }
@@ -105,6 +123,8 @@ struct MainView: View {
                     .bold()
                     .font(.custom("Futura-Medium", size: 24))
             }
+            .zIndex(0) // This will bring the rocket image to the front
+
 //            .padding()
 //            .ignoresSafeArea(.container, edges: .bottom)
             .frame(maxWidth: .infinity)
