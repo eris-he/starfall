@@ -21,18 +21,18 @@ struct OverviewView: View {
                 Spacer()
                 
                 HStack {
-                    Image("planet-1") // Replace with the actual name of your first image asset
+                    Image("star-2") // Replace with the actual name of your first image asset
                         .resizable()
                         .scaledToFit()
                         .frame(width: 100, height: 100)
                             
-                    Image("planet-1") // Replace with the actual name of your second image asset
+                    Image("star-2") // Replace with the actual name of your second image asset
                         .resizable()
                         .scaledToFit()
                         .frame(width: 100, height: 100)
                         .offset(y: -20)
                             
-                    Image("planet-1") // Replace with the actual name of your third image asset
+                    Image("star-2") // Replace with the actual name of your third image asset
                         .resizable()
                         .scaledToFit()
                         .frame(width: 100, height: 100)
@@ -51,7 +51,7 @@ struct OverviewView: View {
                     .font(.custom("Futura-Medium", size:28))
                 
                 ZStack {
-                    Image("planet-1") // Replace with the actual name of your first image asset
+                    Image("sun") // Replace with the actual name of your first image asset
                         .resizable()
                         .scaledToFit()
                         .frame(width: 400, height: 400)
