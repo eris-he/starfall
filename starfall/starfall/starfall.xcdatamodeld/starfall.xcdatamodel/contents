@@ -8,4 +8,10 @@
         <attribute name="noteDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="noteTitle" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="Task" representedClassName="Task" syncable="YES" codeGenerationType="class">
+        <attribute name="taskCheckbox" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="taskCompletedTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="taskContent" attributeType="String" defaultValueString="New Task"/>
+        <attribute name="taskCreatedTime" attributeType="Date" defaultDateTimeInterval="728707260" usesScalarValueType="NO"/>
+    </entity>
 </model>

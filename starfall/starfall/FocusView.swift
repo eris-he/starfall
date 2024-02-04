@@ -35,7 +35,7 @@ struct FocusView: View {
                     if timerIsActive {
                         showAlert = true // Show alert to confirm stopping
                     } else {
-                        selectedTime = initialTime // Reset time for a new session
+                        selectedTime = selectedTime // Reset time for a new session
                         timerIsActive = true
                     }
                 }) {
