@@ -21,18 +21,18 @@ struct OverviewView: View {
                 Spacer()
                 
                 HStack {
-                    Image("star-2") // Replace with the actual name of your first image asset
+                    Image("star") // Replace with the actual name of your first image asset
                         .resizable()
                         .scaledToFit()
                         .frame(width: 100, height: 100)
                             
-                    Image("star-2") // Replace with the actual name of your second image asset
+                    Image("star") // Replace with the actual name of your second image asset
                         .resizable()
                         .scaledToFit()
                         .frame(width: 100, height: 100)
                         .offset(y: -20)
                             
-                    Image("star-2") // Replace with the actual name of your third image asset
+                    Image("star") // Replace with the actual name of your third image asset
                         .resizable()
                         .scaledToFit()
                         .frame(width: 100, height: 100)

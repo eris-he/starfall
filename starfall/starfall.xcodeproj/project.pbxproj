@@ -22,8 +22,10 @@
 		0F33BFBD2B6ED67E00E41DB2 /* HealthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F33BFBC2B6ED67E00E41DB2 /* HealthView.swift */; };
 		0F33BFBF2B6ED68900E41DB2 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F33BFBE2B6ED68900E41DB2 /* CalendarView.swift */; };
 		0FC340B52B6EDC7C0071E1F4 /* OverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC340B42B6EDC7C0071E1F4 /* OverviewView.swift */; };
-		9FF1AB5F2B6EE90C00DE23DA /* NoteDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF1AB5E2B6EE90C00DE23DA /* NoteDetailView.swift */; };
 		0FC340B72B6EF1A80071E1F4 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0FC340B62B6EF1A80071E1F4 /* Media.xcassets */; };
+		7EEC2B482B6F1F8F0024825F /* CalendarKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7EEC2B472B6F1F8F0024825F /* CalendarKit */; };
+		7EEC2B4C2B6F24B70024825F /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEC2B4B2B6F24B70024825F /* CalendarViewController.swift */; };
+		9FF1AB5F2B6EE90C00DE23DA /* NoteDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF1AB5E2B6EE90C00DE23DA /* NoteDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,8 +64,9 @@
 		0F33BFBC2B6ED67E00E41DB2 /* HealthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthView.swift; sourceTree = "<group>"; };
 		0F33BFBE2B6ED68900E41DB2 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		0FC340B42B6EDC7C0071E1F4 /* OverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewView.swift; sourceTree = "<group>"; };
-		9FF1AB5E2B6EE90C00DE23DA /* NoteDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDetailView.swift; sourceTree = "<group>"; };
 		0FC340B62B6EF1A80071E1F4 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		7EEC2B4B2B6F24B70024825F /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
+		9FF1AB5E2B6EE90C00DE23DA /* NoteDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7EEC2B482B6F1F8F0024825F /* CalendarKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,6 +122,7 @@
 				0F33BF892B6ECD2100E41DB2 /* MainView.swift */,
 				0FC340B42B6EDC7C0071E1F4 /* OverviewView.swift */,
 				0F33BFBE2B6ED68900E41DB2 /* CalendarView.swift */,
+				7EEC2B4B2B6F24B70024825F /* CalendarViewController.swift */,
 				0F33BFBC2B6ED67E00E41DB2 /* HealthView.swift */,
 				0F33BFBA2B6ED65A00E41DB2 /* NotesView.swift */,
 				0F33BFB82B6ED63C00E41DB2 /* FocusView.swift */,
@@ -173,6 +178,9 @@
 			dependencies = (
 			);
 			name = starfall;
+			packageProductDependencies = (
+				7EEC2B472B6F1F8F0024825F /* CalendarKit */,
+			);
 			productName = starfall;
 			productReference = 0F33BF842B6ECD2100E41DB2 /* starfall.app */;
 			productType = "com.apple.product-type.application";
@@ -245,6 +253,9 @@
 				Base,
 			);
 			mainGroup = 0F33BF7B2B6ECD2100E41DB2;
+			packageReferences = (
+				7EEC2B462B6F1F8F0024825F /* XCRemoteSwiftPackageReference "CalendarKit" */,
+			);
 			productRefGroup = 0F33BF852B6ECD2100E41DB2 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -288,6 +299,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7EEC2B4C2B6F24B70024825F /* CalendarViewController.swift in Sources */,
 				0F33BFBB2B6ED65A00E41DB2 /* NotesView.swift in Sources */,
 				0F33BF912B6ECD2400E41DB2 /* Persistence.swift in Sources */,
 				0F33BF8A2B6ECD2100E41DB2 /* MainView.swift in Sources */,
@@ -621,6 +633,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		7EEC2B462B6F1F8F0024825F /* XCRemoteSwiftPackageReference "CalendarKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/richardtop/CalendarKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.10;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7EEC2B472B6F1F8F0024825F /* CalendarKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7EEC2B462B6F1F8F0024825F /* XCRemoteSwiftPackageReference "CalendarKit" */;
+			productName = CalendarKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		0F33BF922B6ECD2400E41DB2 /* starfall.xcdatamodeld */ = {
