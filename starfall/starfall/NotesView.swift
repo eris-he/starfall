@@ -57,11 +57,6 @@ struct NotesView: View {
                             Divider()
                                 .background(Color("separator-color"))
                                 .padding(0)
-                            // Set the Divider to be fully transparent or the same as the background
-//                            Rectangle()
-//                                .fill(Color("separator-color")) // Use your custom color for the separator
-//                                .frame(height: 2) // Set the thickness of your divider
-//                                .edgesIgnoringSafeArea(.horizontal) // Make it extend to the edges of the screen
                         }
                         .listRowBackground(Color("bg-color"))
                     }
